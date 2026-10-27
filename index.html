@@ -1,30 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#fff8ef">
+
 <title>A Little Birthday Surprise</title>
 
 <style>
 :root {
   --cream: #fff8ef;
-  --rose: #d98c9a;
+  --pink: #e9a0b0;
+  --lavender: #c5b4e8;
+  --yellow: #f3d77d;
+  --blue: #a8d5ed;
+  --mint: #a8d9c0;
   --burgundy: #8f4052;
-  --gold: #d9b66f;
-  --brown: #49352f;
+  --brown: #59443e;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  background: radial-gradient(circle, #fffdf9, var(--cream));
+  background:
+    radial-gradient(ellipse at top, #fffdf9 0%, var(--cream) 75%);
   color: var(--brown);
-  font-family: Georgia, serif;
+  font-family: Georgia, "Times New Roman", serif;
   text-align: center;
   -webkit-tap-highlight-color: transparent;
 }
@@ -32,214 +38,327 @@ body {
 .scene {
   min-height: 100vh;
   min-height: 100dvh;
-  padding: 28px 18px;
+  padding: 28px 15px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .card {
   width: 100%;
-  max-width: 470px;
+  max-width: 460px;
   margin: auto;
   position: relative;
 }
 
-.hidden { display: none !important; }
+.hidden {
+  display: none !important;
+}
 
 .eyebrow {
-  color: #a56d72;
-  font: 600 11px system-ui, sans-serif;
+  color: #a77578;
+  font-family: system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
 h1 {
   color: var(--burgundy);
-  font-size: clamp(32px, 9vw, 49px);
+  font-size: clamp(32px, 9vw, 46px);
   font-weight: normal;
-  line-height: 1.12;
-  margin: 15px 0;
+  line-height: 1.16;
+  margin: 12px 0;
 }
 
 .intro {
-  max-width: 340px;
+  max-width: 335px;
   margin: 0 auto 15px;
-  color: #765b53;
+  color: #80665d;
+  font-size: 15px;
   line-height: 1.7;
 }
 
 .hint {
-  color: #9a6a6b;
-  font: 13px system-ui, sans-serif;
+  color: #a17b76;
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
   line-height: 1.6;
+  margin: 8px auto;
 }
 
 button {
   font-family: inherit;
   cursor: pointer;
-  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .main-btn {
+  border: none;
+  border-radius: 28px;
+  padding: 14px 25px;
+  margin-top: 20px;
+  color: white;
   background: var(--burgundy);
-  color: #fffaf4;
-  border: 0;
-  border-radius: 30px;
-  padding: 14px 24px;
-  margin-top: 15px;
-  box-shadow: 0 6px 20px #8f405222;
-  font-size: 15px;
+  box-shadow: 0 6px 18px #8f405225;
+  font-size: 14px;
+  transition: transform .2s, box-shadow .2s;
 }
 
-.main-btn:active { transform: scale(.97); }
+.main-btn:active {
+  transform: scale(.96);
+}
 
-#bowSvg {
-  width: 100%;
-  height: auto;
+.main-btn:focus-visible,
+.balloon:focus-visible {
+  outline: 3px solid var(--burgundy);
+  outline-offset: 5px;
+}
+
+/* BALLOON FIELD */
+
+#balloonSvg {
   display: block;
+  width: 100%;
+  max-width: 390px;
+  height: auto;
+  margin: 5px auto 0;
   overflow: visible;
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
 }
 
-#arrowGroup {
-  cursor: grab;
-  touch-action: none;
+.balloon {
+  cursor: pointer;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: float 3s ease-in-out infinite;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-#arrowGroup:active { cursor: grabbing; }
+.balloon:nth-of-type(2) {
+  animation-delay: -.7s;
+}
+
+.balloon:nth-of-type(3) {
+  animation-delay: -1.4s;
+}
+
+.balloon:nth-of-type(4) {
+  animation-delay: -1s;
+}
+
+.balloon:nth-of-type(5) {
+  animation-delay: -.4s;
+}
+
+.balloon.popped {
+  animation: pop .22s ease-out forwards !important;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-7px) rotate(1deg);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  65% {
+    transform: scale(1.2);
+    opacity: .8;
+  }
+
+  100% {
+    transform: scale(.05);
+    opacity: 0;
+  }
+}
+
+.balloon-word {
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  fill: #654c50;
+  pointer-events: none;
+}
+
+.balloon-string {
+  fill: none;
+  stroke: #c7a9a0;
+  stroke-width: 1.2;
+  pointer-events: none;
+}
+
+/* WORDS FLY INTO THEIR PLACES */
+
+.sentence {
+  margin: 10px auto 0;
+  padding: 8px 0;
+  opacity: .9;
+}
+
+.sentence-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(4px, 2vw, 10px);
+  min-height: 39px;
+  white-space: nowrap;
+}
+
+.word-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  color: var(--burgundy);
+  font-size: clamp(17px, 5.2vw, 25px);
+  font-weight: bold;
+  letter-spacing: .2px;
+  opacity: .13;
+  transition: opacity .35s, transform .35s;
+}
+
+.word-slot.filled {
+  opacity: 1;
+  animation: wordLand .55s cubic-bezier(.2, 1.5, .5, 1);
+}
+
+@keyframes wordLand {
+  0% {
+    transform: scale(.6) translateY(8px);
+  }
+
+  65% {
+    transform: scale(1.12) translateY(-2px);
+  }
+
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+#flyingWord {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  pointer-events: none;
+  color: var(--burgundy);
+  font-family: system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  white-space: nowrap;
+  text-shadow: 0 2px 10px #8f405220;
+  display: none;
+}
+
+.sentence.complete {
+  animation: sentenceGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes sentenceGlow {
+  from {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+
+  to {
+    filter: drop-shadow(0 2px 9px #e9a0b077);
+  }
+}
+
+#allDone {
+  animation: appear .7s ease both;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .footer {
-  color: #b18e7d;
-  font: 11px system-ui, sans-serif;
-  margin-top: 24px;
-  letter-spacing: .5px;
+  margin-top: 22px;
+  color: #b49a8a;
+  font-family: system-ui, sans-serif;
+  font-size: 10px;
+  letter-spacing: .7px;
 }
 
-.fade-in {
-  animation: fadeIn .8s ease both;
+/* BIRTHDAY REVEAL */
+
+.birthday-heart {
+  font-family: system-ui, sans-serif;
+  font-size: 76px;
+  color: var(--pink);
+  margin: 12px 0;
+  animation: heartbeat 1.3s ease-in-out infinite;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Birthday reveal */
-
-.heart-icon {
-  font-family: sans-serif;
-  color: var(--rose);
-  font-size: 85px;
-  line-height: 1.2;
-  animation: heartBeat 1.2s ease-in-out infinite;
-}
-
-@keyframes heartBeat {
+@keyframes heartbeat {
   0%, 100% { transform: scale(1); }
-  35% { transform: scale(1.12); }
-  55% { transform: scale(.96); }
+  35% { transform: scale(1.13); }
+  55% { transform: scale(.97); }
 }
 
-.sparkle {
-  position: absolute;
-  pointer-events: none;
-  color: var(--gold);
-  animation: sparkleFloat 2s ease-in-out infinite alternate;
-}
-
-@keyframes sparkleFloat {
-  from { transform: translateY(8px) rotate(0deg); opacity: .3; }
-  to { transform: translateY(-12px) rotate(20deg); opacity: 1; }
-}
-
-/* Treasure chest */
-
-#chestButton {
-  width: min(100%, 340px);
-  border: 0;
-  background: transparent;
-  padding: 0;
-}
-
-#chestSvg {
-  width: 100%;
-  height: auto;
-  display: block;
-  overflow: visible;
-}
-
-#chestLid {
-  transform-box: view-box;
-  transform-origin: 150px 104px;
-  transition: transform .8s ease;
-}
-
-#chestButton.opened #chestLid {
-  transform: rotate(-28deg) translate(-7px, -10px);
-}
-
-#chestGlow {
-  opacity: 0;
-  transition: opacity .7s ease;
-}
-
-#chestButton.opened #chestGlow { opacity: 1; }
-
-/* Letter */
-
-.letter {
-  position: relative;
-  width: 100%;
-  max-width: 430px;
-  margin: 22px auto 0;
-  padding: 28px 24px;
-  text-align: left;
-  background: linear-gradient(145deg, #fffdf8, #fff3e3);
-  border: 1px solid #ead5bc;
-  box-shadow: 0 15px 35px #6f49301c;
-  max-height: 55vh;
-  max-height: 55dvh;
-  overflow-y: auto;
-  animation: unfold .9s ease both;
-}
-
-@keyframes unfold {
-  from { opacity: 0; transform: translateY(35px) scale(.85); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.letter h2 {
-  color: var(--burgundy);
-  font-size: 27px;
-  font-weight: normal;
-}
-
-.letter p {
-  color: #624a42;
+.birthday-message {
+  max-width: 330px;
+  margin: 18px auto;
+  color: #80665d;
   font-size: 16px;
-  line-height: 1.85;
-  white-space: pre-line;
+  line-height: 1.8;
 }
 
-.letter .signature {
-  color: var(--burgundy);
-  font-style: italic;
+.sparkles {
+  color: #c9a45d;
+  font-size: 20px;
+  letter-spacing: 12px;
+  margin: 18px 0;
 }
 
-@media (max-height: 700px) {
-  .scene { padding: 15px; }
-  #bowSvg { max-height: 43vh; }
-  .intro { margin-bottom: 5px; }
+@media (max-width: 360px) {
+  .scene {
+    padding: 22px 10px;
+  }
+
+  .balloon-word {
+    font-size: 11px;
+  }
+
+  .sentence-line {
+    gap: 3px;
+  }
+
+  .word-slot {
+    font-size: 17px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .balloon {
+    animation: none;
+  }
+
   *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 </style>
@@ -247,455 +366,343 @@ button {
 
 <body>
 
-<!-- SCENE 1: BOW AND ARROW -->
+<!-- SCENE 1: FIVE BALLOONS -->
 
-<section class="scene" id="opening">
-<div class="card">
+<section class="scene" id="balloonScene">
+  <div class="card">
 
-<p class="eyebrow">A tiny surprise, just for you</p>
+    <p class="eyebrow">A little surprise for you</p>
 
-<h1>Ready, birthday girl?</h1>
+    <h1>Five little balloons…</h1>
 
-<p class="intro">
-Pull back the little arrow, then let it fly.
-There's a little bit of love waiting at the other end. 🤍
-</p>
+    <p class="intro">
+      Each one is hiding a little word.
+      Tap them and see what they have to say. 🎈
+    </p>
 
-<svg id="bowSvg" viewBox="0 0 360 285"
-     role="img" aria-label="Pull the arrow backwards and release it">
+    <svg id="balloonSvg"
+         viewBox="0 0 360 345"
+         role="group"
+         aria-label="Five balloons. Tap each balloon to reveal its word.">
 
-<defs>
-  <linearGradient id="bowColor" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0%" stop-color="#bd7a83"/>
-    <stop offset="100%" stop-color="#783347"/>
-  </linearGradient>
+      <defs>
+        <linearGradient id="pinkGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f4c1cb"/>
+          <stop offset="100%" stop-color="#e49aaa"/>
+        </linearGradient>
 
-  <linearGradient id="heartColor" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0%" stop-color="#f0b5bf"/>
-    <stop offset="100%" stop-color="#d77d91"/>
-  </linearGradient>
-</defs>
+        <linearGradient id="lavenderGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ded2f5"/>
+          <stop offset="100%" stop-color="#b9a5e2"/>
+        </linearGradient>
 
-<ellipse cx="175" cy="252" rx="125" ry="9"
-         fill="#b58e7c" opacity=".12"/>
+        <linearGradient id="yellowGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#fff0ae"/>
+          <stop offset="100%" stop-color="#edcf69"/>
+        </linearGradient>
 
-<!-- Target heart -->
+        <linearGradient id="blueGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#d3effb"/>
+          <stop offset="100%" stop-color="#9bcce7"/>
+        </linearGradient>
 
-<g id="targetHeart" transform="translate(255 104)">
-  <path d="M0 18
-    C-30 -8 -53 15 -42 39
-    C-34 57 -10 75 0 82
-    C10 75 34 57 42 39
-    C53 15 30 -8 0 18Z"
-    fill="url(#heartColor)"
-    stroke="#c76e83" stroke-width="2"/>
+        <linearGradient id="mintGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#d0f0df"/>
+          <stop offset="100%" stop-color="#9bd0b5"/>
+        </linearGradient>
+      </defs>
 
-  <path d="M-25 24 Q-20 14 -9 22"
-        stroke="#fff8ef" stroke-width="4"
-        fill="none" stroke-linecap="round"
-        opacity=".8"/>
+      <!-- Tiny decorative stars -->
 
-  <circle cx="40" cy="0" r="3" fill="#d9b66f"/>
-</g>
+      <g fill="#d7b879" opacity=".8">
+        <path d="M178 12 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3Z"/>
+        <path d="M330 156 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z"/>
+        <path d="M26 184 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z"/>
+        <circle cx="178" cy="322" r="2"/>
+        <circle cx="316" cy="45" r="2"/>
+        <circle cx="43" cy="48" r="2"/>
+      </g>
 
-<!-- Bow -->
+      <!-- BALLOON 1: YOU -->
 
-<path id="bowBody"
-      d="M91 48 Q147 150 91 252"
-      fill="none" stroke="url(#bowColor)"
-      stroke-width="9" stroke-linecap="round"/>
+      <g class="balloon"
+         data-word="YOU"
+         role="button"
+         tabindex="0"
+         aria-label="Pop balloon: YOU"
+         transform="translate(65 83)">
 
-<path id="bowHighlight"
-      d="M96 57 Q143 150 96 243"
-      fill="none" stroke="#e9b3b8"
-      stroke-width="2" opacity=".8"/>
+        <ellipse cx="-5" cy="-12" rx="4" ry="7"
+                 fill="#fff" opacity=".3"
+                 transform="rotate(25 -5 -12)"/>
 
-<!-- String -->
+        <ellipse cx="0" cy="0" rx="34" ry="43"
+                 fill="url(#pinkGradient)"
+                 stroke="#d98c9a" stroke-width="1.1"/>
 
-<path id="bowString"
-      d="M91 48 L111 150 L91 252"
-      fill="none" stroke="#b58a6a"
-      stroke-width="2"/>
+        <ellipse cx="-11" cy="-15" rx="5" ry="10"
+                 fill="#fff" opacity=".4"
+                 transform="rotate(25 -11 -15)"/>
 
-<!-- Arrow -->
+        <path d="M-4 42 L0 48 L4 42Z"
+              fill="#d98c9a"/>
 
-<g id="arrowGroup" transform="translate(0 0)">
-  <line x1="111" y1="150" x2="229" y2="150"
-        stroke="#8f4052" stroke-width="3.5"
-        stroke-linecap="round"/>
+        <text class="balloon-word"
+              x="0" y="5" text-anchor="middle">YOU</text>
 
-  <path d="M229 150 L215 142 L218 150 L215 158Z"
-        fill="#8f4052"/>
+        <path class="balloon-string"
+              d="M0 48 Q8 62 0 75 Q-5 86 3 96"/>
+      </g>
 
-  <path d="M116 150 L103 140 L107 150Z"
-        fill="#d9b66f"/>
+      <!-- BALLOON 2: ARE -->
 
-  <path d="M116 150 L103 160 L107 150Z"
-        fill="#d9b66f"/>
+      <g class="balloon"
+         data-word="ARE"
+         role="button"
+         tabindex="0"
+         aria-label="Pop balloon: ARE"
+         transform="translate(180 65)">
 
-  <circle cx="112" cy="150" r="3" fill="#d9b66f"/>
-</g>
+        <ellipse cx="-5" cy="-12" rx="4" ry="7"
+                 fill="#fff" opacity=".3"
+                 transform="rotate(25 -5 -12)"/>
 
-<text x="180" y="277" text-anchor="middle"
-      font-family="system-ui,sans-serif"
-      font-size="10" letter-spacing="2"
-      fill="#b18e7d">A LITTLE SHOT OF LOVE</text>
+        <ellipse cx="0" cy="0" rx="34" ry="43"
+                 fill="url(#lavenderGradient)"
+                 stroke="#b4a0dc" stroke-width="1.1"/>
 
-</svg>
+        <ellipse cx="-11" cy="-15" rx="5" ry="10"
+                 fill="#fff" opacity=".45"
+                 transform="rotate(25 -11 -15)"/>
 
-<p class="hint" id="pullHint">
-Touch the arrow and pull it back ↙
-</p>
+        <path d="M-4 42 L0 48 L4 42Z"
+              fill="#b9a5e2"/>
 
-<button class="main-btn hidden" id="retryButton">
-Try again
-</button>
+        <text class="balloon-word"
+              x="0" y="5" text-anchor="middle">ARE</text>
 
-<p class="footer">Made for a very special birthday 🤍</p>
-</div>
+        <path class="balloon-string"
+              d="M0 48 Q-7 63 0 76 Q8 88 0 102"/>
+      </g>
+
+      <!-- BALLOON 3: SO -->
+
+      <g class="balloon"
+         data-word="SO"
+         role="button"
+         tabindex="0"
+         aria-label="Pop balloon: SO"
+         transform="translate(295 92)">
+
+        <ellipse cx="-5" cy="-12" rx="4" ry="7"
+                 fill="#fff" opacity=".35"
+                 transform="rotate(25 -5 -12)"/>
+
+        <ellipse cx="0" cy="0" rx="34" ry="43"
+                 fill="url(#yellowGradient)"
+                 stroke="#dfbf5e" stroke-width="1.1"/>
+
+        <ellipse cx="-11" cy="-15" rx="5" ry="10"
+                 fill="#fff" opacity=".45"
+                 transform="rotate(25 -11 -15)"/>
+
+        <path d="M-4 42 L0 48 L4 42Z"
+              fill="#edcf69"/>
+
+        <text class="balloon-word"
+              x="0" y="5" text-anchor="middle">SO</text>
+
+        <path class="balloon-string"
+              d="M0 48 Q8 61 0 76 Q-8 87 0 100"/>
+      </g>
+
+      <!-- BALLOON 4: VERY -->
+
+      <g class="balloon"
+         data-word="VERY"
+         role="button"
+         tabindex="0"
+         aria-label="Pop balloon: VERY"
+         transform="translate(112 210)">
+
+        <ellipse cx="-5" cy="-12" rx="4" ry="7"
+                 fill="#fff" opacity=".35"
+                 transform="rotate(25 -5 -12)"/>
+
+        <ellipse cx="0" cy="0" rx="36" ry="44"
+                 fill="url(#blueGradient)"
+                 stroke="#94c3dc" stroke-width="1.1"/>
+
+        <ellipse cx="-12" cy="-16" rx="5" ry="10"
+                 fill="#fff" opacity=".45"
+                 transform="rotate(25 -12 -16)"/>
+
+        <path d="M-4 43 L0 49 L4 43Z"
+              fill="#9bcce7"/>
+
+        <text class="balloon-word"
+              x="0" y="5" text-anchor="middle">VERY</text>
+
+        <path class="balloon-string"
+              d="M0 49 Q-8 64 0 78 Q7 89 0 101"/>
+      </g>
+
+      <!-- BALLOON 5: SPECIAL -->
+
+      <g class="balloon"
+         data-word="SPECIAL"
+         role="button"
+         tabindex="0"
+         aria-label="Pop balloon: SPECIAL"
+         transform="translate(252 218)">
+
+        <ellipse cx="-5" cy="-12" rx="4" ry="7"
+                 fill="#fff" opacity=".35"
+                 transform="rotate(25 -5 -12)"/>
+
+        <ellipse cx="0" cy="0" rx="42" ry="45"
+                 fill="url(#mintGradient)"
+                 stroke="#8fc6a8" stroke-width="1.1"/>
+
+        <ellipse cx="-15" cy="-16" rx="5" ry="10"
+                 fill="#fff" opacity=".45"
+                 transform="rotate(25 -15 -16)"/>
+
+        <path d="M-4 44 L0 50 L4 44Z"
+              fill="#9bd0b5"/>
+
+        <text class="balloon-word"
+              x="0" y="5" text-anchor="middle"
+              textLength="65" lengthAdjust="spacingAndGlyphs">SPECIAL</text>
+
+        <path class="balloon-string"
+              d="M0 50 Q8 65 0 78 Q-7 90 0 102"/>
+      </g>
+
+    </svg>
+
+    <p class="hint" id="tapHint">
+      Pop any balloon to begin ✨
+    </p>
+
+    <!-- Each word has a permanent destination.
+         Empty slots reserve space for the words. -->
+
+    <div class="sentence" id="sentence"
+         aria-label="You are so very special">
+
+      <div class="sentence-line">
+        <span class="word-slot" data-slot="YOU">YOU</span>
+        <span class="word-slot" data-slot="ARE">ARE</span>
+        <span class="word-slot" data-slot="SO">SO</span>
+      </div>
+
+      <div class="sentence-line">
+        <span class="word-slot" data-slot="VERY">VERY</span>
+        <span class="word-slot" data-slot="SPECIAL">SPECIAL</span>
+      </div>
+
+    </div>
+
+    <div id="allDone" class="hidden">
+      <p class="intro" style="margin-top:15px">
+        And every word is meant just for you. 🤍
+      </p>
+
+      <button class="main-btn" id="birthdayButton">
+        One more little surprise…
+      </button>
+    </div>
+
+    <p class="footer">Made with a little extra love ♡</p>
+
+  </div>
 </section>
 
 
 <!-- SCENE 2: BIRTHDAY REVEAL -->
 
-<section class="scene hidden" id="birthday">
-<div class="card">
+<section class="scene hidden" id="birthdayScene">
+  <div class="card">
 
-<span class="sparkle" style="top:5%;left:10%;font-size:25px">✦</span>
-<span class="sparkle" style="top:15%;right:8%;font-size:22px">✧</span>
-<span class="sparkle" style="bottom:20%;left:12%;font-size:20px">♡</span>
-<span class="sparkle" style="bottom:22%;right:10%;font-size:25px">✦</span>
+    <p class="eyebrow">Today is all about you</p>
 
-<p class="eyebrow">Today is all about you</p>
+    <div class="birthday-heart">♥</div>
 
-<div class="heart-icon">♥</div>
+    <h1>Happy Birthday,<br>Aabhyanshi!</h1>
 
-<h1>Happy Birthday,<br>Aabhyanshi!</h1>
+    <div class="sparkles">✦ ♡ ✧</div>
 
-<p class="intro">
-I hope your day feels as lovely, warm,
-and special as you make the world around you. 🤍
-</p>
+    <p class="birthday-message">
+      You are so very special.
+      I hope your birthday brings you beautiful moments,
+      little reasons to smile, and memories you will
+      always want to keep. 🤍
+    </p>
 
-<button class="main-btn" id="showChest">
-There's one last thing…
-</button>
+    <p class="intro">
+      This is just the beginning of your little surprise.
+    </p>
 
-<p class="footer">A little more magic is waiting</p>
-</div>
+    <p class="footer">Your day. Your little world. ♡</p>
+
+  </div>
 </section>
 
 
-<!-- SCENE 3: TREASURE CHEST -->
+<!-- The travelling word is placed over the page during animation. -->
 
-<section class="scene hidden" id="treasure">
-<div class="card">
-
-<p class="eyebrow">One last little surprise</p>
-
-<h1>A little something<br>for you</h1>
-
-<p class="intro">
-There's something tucked away inside.
-Open it when you're ready. 🤍
-</p>
-
-<button id="chestButton" aria-label="Open the treasure chest">
-
-<svg id="chestSvg" viewBox="0 0 300 225">
-
-<defs>
-  <linearGradient id="woodColor" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0%" stop-color="#b97562"/>
-    <stop offset="100%" stop-color="#7e443c"/>
-  </linearGradient>
-
-  <radialGradient id="glowColor">
-    <stop offset="0%" stop-color="#ffe8a7" stop-opacity=".95"/>
-    <stop offset="100%" stop-color="#ffe8a7" stop-opacity="0"/>
-  </radialGradient>
-
-  <linearGradient id="goldColor" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0%" stop-color="#f2d995"/>
-    <stop offset="100%" stop-color="#c89a45"/>
-  </linearGradient>
-</defs>
-
-<ellipse cx="150" cy="196" rx="104" ry="12"
-         fill="#b58e7c" opacity=".18"/>
-
-<ellipse id="chestGlow" cx="150" cy="110"
-         rx="115" ry="85" fill="url(#glowColor)"/>
-
-<!-- Letter peek -->
-
-<g id="letterPeek" opacity="0">
-  <path d="M111 112 L111 63 Q111 58 117 58
-           L183 58 Q189 58 189 63 L189 116Z"
-        fill="#fff8e8" stroke="#d9c3a5" stroke-width="2"/>
-
-  <path d="M123 73 L177 73 M123 82 L172 82"
-        stroke="#d6b8a0" stroke-width="2"
-        stroke-linecap="round"/>
-
-  <path d="M150 99
-           C136 85 127 99 138 108
-           L150 117 L162 108
-           C173 99 164 85 150 99Z"
-        fill="#d98c9a"/>
-</g>
-
-<!-- Chest base -->
-
-<path d="M46 107 Q46 99 57 99
-         L243 99 Q254 99 254 111
-         L244 184 Q243 193 232 193
-         L68 193 Q57 193 56 184Z"
-      fill="url(#woodColor)" stroke="#704039" stroke-width="3"/>
-
-<path d="M61 119 L239 119 L231 178 L69 178Z"
-      fill="#9b5a4b" stroke="#d9b66f" stroke-width="4"/>
-
-<path d="M79 123 L79 177 M221 123 L221 177"
-      stroke="#d9b66f" stroke-width="4"/>
-
-<path d="M46 112 L254 112"
-      stroke="#e4c16e" stroke-width="7"/>
-
-<!-- Lid -->
-
-<g id="chestLid">
-  <path d="M54 111 L54 85
-           Q58 42 103 35
-           L197 35 Q242 42 246 85
-           L246 111Z"
-        fill="url(#woodColor)" stroke="#704039" stroke-width="3"/>
-
-  <path d="M72 94 Q77 56 108 52
-           L192 52 Q223 56 228 94"
-        fill="none" stroke="#d69a78" stroke-width="3"/>
-
-  <path d="M73 100 L227 100"
-        stroke="#d9b66f" stroke-width="5"/>
-
-  <path d="M89 50 L89 99 M211 50 L211 99"
-        stroke="#d9b66f" stroke-width="4"/>
-</g>
-
-<!-- Lock -->
-
-<rect x="134" y="104" width="32" height="44"
-      rx="5" fill="url(#goldColor)" stroke="#a77a32" stroke-width="2"/>
-
-<circle cx="150" cy="121" r="4" fill="#8f4052"/>
-
-<path d="M150 125 L150 134"
-      stroke="#8f4052" stroke-width="3"
-      stroke-linecap="round"/>
-
-<path d="M72 185 L228 185"
-      stroke="#d9b66f" stroke-width="3"/>
-
-</svg>
-
-</button>
-
-<p class="hint" id="chestHint">Tap the chest to open it ✨</p>
-
-<!-- PERSONAL LETTER -->
-
-<div class="letter hidden" id="letterPanel">
-
-<p class="eyebrow">A little letter, just for you</p>
-
-<h2>To my birthday girl…</h2>
-
-<p id="letterText">Happy Birthday, Mon Coeur. 🤍
-
-I hope this new year of your life brings you gentle days, little reasons to smile, and so many moments that make you feel loved and appreciated.
-
-I'm grateful for all the memories we've made and for the little world that has grown between us.
-
-No matter how busy life gets, I hope you always remember how special you are and how much happiness you bring just by being yourself.
-
-Today is your day. I hope it gives you even a little of the warmth you give to the people around you.
-
-Keep smiling, keep dreaming, and keep being wonderfully you. 🤍</p>
-
-<p class="signature">With all my love,<br>Yash ♡</p>
-
-<p class="hint" style="text-align:center">
-P.S. This little letter is yours to keep. ♡
-</p>
-
-</div>
-
-<p class="footer" id="letterFooter">
-Some things are better when opened slowly 🤍
-</p>
-
-</div>
-</section>
+<span id="flyingWord" aria-hidden="true"></span>
 
 
 <script>
 (() => {
-  const $ = id => document.getElementById(id);
+  const balloons = document.querySelectorAll(".balloon");
+  const slots = document.querySelectorAll(".word-slot");
 
-  const opening = $("opening");
-  const birthday = $("birthday");
-  const treasure = $("treasure");
+  const tapHint = document.getElementById("tapHint");
+  const sentence = document.getElementById("sentence");
+  const allDone = document.getElementById("allDone");
+  const flyingWord = document.getElementById("flyingWord");
 
-  const svg = $("bowSvg");
-  const arrow = $("arrowGroup");
-  const string = $("bowString");
-  const bow = $("bowBody");
-  const highlight = $("bowHighlight");
-  const heart = $("targetHeart");
-  const hint = $("pullHint");
-  const retry = $("retryButton");
+  const balloonScene = document.getElementById("balloonScene");
+  const birthdayScene = document.getElementById("birthdayScene");
 
-  let dragging = false;
-  let flying = false;
-  let shot = false;
-  let pointerId = null;
-  let pullDistance = 0;
-  let startX = 0;
-  let startY = 0;
+  const poppedWords = new Set();
 
-  const maxPull = 55;
+  let animationRunning = false;
 
-  function moveArrow(dx, dy) {
-    arrow.setAttribute("transform", `translate(${dx} ${dy})`);
-
-    const bend = Math.min(maxPull, Math.max(0, -dx));
-    const stringX = 111 + dx;
-    const stringY = 150 + dy;
-
-    string.setAttribute(
-      "d",
-      `M91 48 Q${stringX} ${stringY} 91 252`
+  function findSlot(word) {
+    return document.querySelector(
+      `.word-slot[data-slot="${word}"]`
     );
-
-    bow.setAttribute(
-      "d",
-      `M91 48 Q${147 - bend * .35} 150 91 252`
-    );
-
-    highlight.setAttribute(
-      "d",
-      `M96 57 Q${143 - bend * .3} 150 96 243`
-    );
-
-    pullDistance = Math.hypot(dx, dy);
   }
 
-  function getPoint(event) {
-    const rect = svg.getBoundingClientRect();
+  function createParticles(x, y) {
+    const colors = [
+      "#e9a0b0",
+      "#c5b4e8",
+      "#f3d77d",
+      "#a8d5ed",
+      "#a8d9c0"
+    ];
 
-    return {
-      x: (event.clientX - rect.left) * 360 / rect.width,
-      y: (event.clientY - rect.top) * 285 / rect.height
-    };
-  }
-
-  arrow.addEventListener("pointerdown", event => {
-    if (flying || shot) return;
-
-    dragging = true;
-    pointerId = event.pointerId;
-
-    try {
-      arrow.setPointerCapture(pointerId);
-    } catch (_) {}
-
-    const point = getPoint(event);
-    startX = point.x;
-    startY = point.y;
-
-    hint.textContent = "Let go when you're ready 💗";
-    event.preventDefault();
-  });
-
-  arrow.addEventListener("pointermove", event => {
-    if (!dragging || event.pointerId !== pointerId) return;
-
-    const point = getPoint(event);
-
-    // Pull backwards, with a little vertical freedom.
-    const dx = Math.max(-maxPull, Math.min(0, point.x - 111));
-    const dy = Math.max(-35, Math.min(35, point.y - 150));
-
-    moveArrow(dx, dy);
-    event.preventDefault();
-  });
-
-  function releaseArrow(event) {
-    if (!dragging) return;
-    if (event && event.pointerId !== pointerId) return;
-
-    dragging = false;
-
-    if (pullDistance > 10) {
-      launchArrow();
-    } else {
-      moveArrow(0, 0);
-      hint.textContent = "Pull the arrow back a little further ↙";
-    }
-  }
-
-  arrow.addEventListener("pointerup", releaseArrow);
-  arrow.addEventListener("pointercancel", releaseArrow);
-
-  function launchArrow() {
-    if (flying || shot) return;
-
-    flying = true;
-    shot = true;
-    arrow.style.pointerEvents = "none";
-    hint.textContent = "A little love, on its way…";
-
-    const transform = arrow.getAttribute("transform");
-    const match = transform.match(
-      /translate\(([-\d.]+)[ ,]+([-\d.]+)\)/
-    );
-
-    const dx = match ? Number(match[1]) : 0;
-    const dy = match ? Number(match[2]) : 0;
-
-    const flight = arrow.animate([
-      { transform: `translate(${dx}px, ${dy}px)` },
-      { transform: "translate(100px, -7px)" }
-    ], {
-      duration: 650,
-      easing: "cubic-bezier(.18,.7,.25,1)",
-      fill: "forwards"
-    });
-
-    flight.onfinish = () => {
-      arrow.style.opacity = "0";
-      popHeart();
-    };
-  }
-
-  function makeParticles() {
-    const colors = ["#d98c9a", "#f0b5bf", "#d9b66f", "#8f4052"];
-
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 10; i++) {
       const particle = document.createElement("span");
-      const angle = Math.PI * 2 * i / 24;
-      const distance = 35 + Math.random() * 65;
 
-      particle.textContent = i % 3 === 0 ? "♡" : "✦";
-      particle.style.position = "absolute";
-      particle.style.left = "70%";
-      particle.style.top = "43%";
-      particle.style.color = colors[i % colors.length];
-      particle.style.fontSize = (10 + Math.random() * 10) + "px";
+      particle.textContent = i % 2 === 0 ? "✦" : "·";
+      particle.style.position = "fixed";
+      particle.style.left = x + "px";
+      particle.style.top = y + "px";
+      particle.style.zIndex = "90";
       particle.style.pointerEvents = "none";
-      particle.style.zIndex = "5";
+      particle.style.color = colors[i % colors.length];
+      particle.style.fontSize = (12 + Math.random() * 10) + "px";
 
-      opening.querySelector(".card").appendChild(particle);
+      document.body.appendChild(particle);
+
+      const angle = Math.PI * 2 * i / 10;
+      const distance = 25 + Math.random() * 35;
 
       const animation = particle.animate([
         {
@@ -705,11 +712,11 @@ Some things are better when opened slowly 🤍
         {
           transform:
             `translate(calc(-50% + ${Math.cos(angle) * distance}px),` +
-            `calc(-50% + ${Math.sin(angle) * distance}px)) scale(.1)`,
+            `calc(-50% + ${Math.sin(angle) * distance}px)) scale(.2)`,
           opacity: 0
         }
       ], {
-        duration: 750 + Math.random() * 350,
+        duration: 550 + Math.random() * 250,
         easing: "ease-out",
         fill: "forwards"
       });
@@ -718,75 +725,142 @@ Some things are better when opened slowly 🤍
     }
   }
 
-  function popHeart() {
-    heart.animate([
-      { transform: "translate(255px,104px) scale(1)", opacity: 1 },
-      { transform: "translate(255px,104px) scale(1.2,.8)", opacity: 1, offset: .25 },
-      { transform: "translate(255px,104px) scale(1.3)", opacity: .8, offset: .55 },
-      { transform: "translate(255px,104px) scale(.05)", opacity: 0 }
-    ], {
-      duration: 500,
-      easing: "ease-out",
-      fill: "forwards"
+  function flyWord(word, source, destination) {
+    return new Promise(resolve => {
+      const sourceRect = source.getBoundingClientRect();
+      const targetRect = destination.getBoundingClientRect();
+
+      const startX = sourceRect.left + sourceRect.width / 2;
+      const startY = sourceRect.top + sourceRect.height / 2;
+
+      const endX = targetRect.left + targetRect.width / 2;
+      const endY = targetRect.top + targetRect.height / 2;
+
+      flyingWord.textContent = word;
+      flyingWord.style.display = "block";
+      flyingWord.style.left = startX + "px";
+      flyingWord.style.top = startY + "px";
+
+      const animation = flyingWord.animate([
+        {
+          left: startX + "px",
+          top: startY + "px",
+          transform: "translate(-50%,-50%) scale(.7) rotate(-5deg)",
+          opacity: 0
+        },
+        {
+          left: (startX + endX) / 2 + "px",
+          top: (startY + endY) / 2 - 35 + "px",
+          transform: "translate(-50%,-50%) scale(1.15) rotate(4deg)",
+          opacity: 1,
+          offset: .55
+        },
+        {
+          left: endX + "px",
+          top: endY + "px",
+          transform: "translate(-50%,-50%) scale(1) rotate(0deg)",
+          opacity: 1
+        }
+      ], {
+        duration: 650,
+        easing: "cubic-bezier(.2,.8,.25,1)",
+        fill: "forwards"
+      });
+
+      animation.onfinish = () => {
+        flyingWord.style.display = "none";
+
+        destination.classList.add("filled");
+
+        resolve();
+      };
     });
-
-    makeParticles();
-
-    setTimeout(() => {
-      opening.classList.add("hidden");
-      birthday.classList.remove("hidden");
-      birthday.classList.add("fade-in");
-    }, 700);
   }
 
-  retry.addEventListener("click", () => {
-    dragging = false;
-    flying = false;
-    shot = false;
-    pullDistance = 0;
+  async function popBalloon(balloon) {
+    if (
+      balloon.classList.contains("popped") ||
+      animationRunning
+    ) {
+      return;
+    }
 
-    moveArrow(0, 0);
-    arrow.style.opacity = "1";
-    arrow.style.pointerEvents = "auto";
-    string.style.opacity = "1";
-    hint.textContent = "Touch the arrow and pull it back ↙";
-    retry.classList.add("hidden");
-  });
+    animationRunning = true;
 
-  $("showChest").addEventListener("click", () => {
-    birthday.classList.add("hidden");
-    treasure.classList.remove("hidden");
-    treasure.classList.add("fade-in");
-  });
+    const word = balloon.dataset.word;
+    const sourceRect = balloon.getBoundingClientRect();
 
-  const chestButton = $("chestButton");
-  const chestHint = $("chestHint");
-  const letterPeek = $("letterPeek");
-  const letterPanel = $("letterPanel");
+    const centerX = sourceRect.left + sourceRect.width / 2;
+    const centerY = sourceRect.top + sourceRect.height / 2;
 
-  chestButton.addEventListener("click", () => {
-    if (chestButton.classList.contains("opened")) return;
+    const destination = findSlot(word);
 
-    chestButton.classList.add("opened");
-    chestButton.setAttribute("aria-label", "Treasure chest opened");
-    chestHint.textContent = "A little letter, just for you…";
+    balloon.classList.add("popped");
+    balloon.setAttribute("aria-pressed", "true");
 
-    letterPeek.animate([
-      { opacity: 0, transform: "translateY(10px)" },
-      { opacity: 1, transform: "translateY(-25px)" }
-    ], {
-      duration: 650,
-      easing: "ease-out",
-      fill: "forwards"
+    createParticles(centerX, centerY);
+
+    tapHint.textContent = "Look where the word belongs… ✨";
+
+    await flyWord(word, balloon, destination);
+
+    destination.classList.add("filled");
+    poppedWords.add(word);
+
+    animationRunning = false;
+
+    if (poppedWords.size === 5) {
+      finishSentence();
+    } else {
+      const remaining = 5 - poppedWords.size;
+
+      tapHint.textContent =
+        remaining + (remaining === 1
+          ? " little word left to discover ♡"
+          : " little words left to discover ♡");
+    }
+  }
+
+  function finishSentence() {
+    tapHint.textContent = "Every word found its place. 🤍";
+
+    sentence.classList.add("complete");
+
+    allDone.classList.remove("hidden");
+
+    // Make sure the final button is visible on smaller screens.
+    setTimeout(() => {
+      allDone.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    }, 250);
+  }
+
+  balloons.forEach(balloon => {
+    balloon.addEventListener("click", () => {
+      popBalloon(balloon);
     });
 
-    setTimeout(() => {
-      letterPanel.classList.remove("hidden");
-      letterPanel.classList.add("fade-in");
-      chestHint.textContent = "A note from me to you 🤍";
-      $("letterFooter").textContent = "Keep this little piece of your birthday 🤍";
-    }, 700);
+    balloon.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        popBalloon(balloon);
+      }
+    });
   });
+
+  document.getElementById("birthdayButton")
+    .addEventListener("click", () => {
+      balloonScene.classList.add("hidden");
+      birthdayScene.classList.remove("hidden");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
 })();
 </script>
 
