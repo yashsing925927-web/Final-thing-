@@ -1,1 +1,794 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff8ef">
+<title>A Little Birthday Surprise</title>
+
+<style>
+:root {
+  --cream: #fff8ef;
+  --rose: #d98c9a;
+  --burgundy: #8f4052;
+  --gold: #d9b66f;
+  --brown: #49352f;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: radial-gradient(circle, #fffdf9, var(--cream));
+  color: var(--brown);
+  font-family: Georgia, serif;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.scene {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 28px 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 470px;
+  margin: auto;
+  position: relative;
+}
+
+.hidden { display: none !important; }
+
+.eyebrow {
+  color: #a56d72;
+  font: 600 11px system-ui, sans-serif;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+h1 {
+  color: var(--burgundy);
+  font-size: clamp(32px, 9vw, 49px);
+  font-weight: normal;
+  line-height: 1.12;
+  margin: 15px 0;
+}
+
+.intro {
+  max-width: 340px;
+  margin: 0 auto 15px;
+  color: #765b53;
+  line-height: 1.7;
+}
+
+.hint {
+  color: #9a6a6b;
+  font: 13px system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.main-btn {
+  background: var(--burgundy);
+  color: #fffaf4;
+  border: 0;
+  border-radius: 30px;
+  padding: 14px 24px;
+  margin-top: 15px;
+  box-shadow: 0 6px 20px #8f405222;
+  font-size: 15px;
+}
+
+.main-btn:active { transform: scale(.97); }
+
+#bowSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#arrowGroup {
+  cursor: grab;
+  touch-action: none;
+}
+
+#arrowGroup:active { cursor: grabbing; }
+
+.footer {
+  color: #b18e7d;
+  font: 11px system-ui, sans-serif;
+  margin-top: 24px;
+  letter-spacing: .5px;
+}
+
+.fade-in {
+  animation: fadeIn .8s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Birthday reveal */
+
+.heart-icon {
+  font-family: sans-serif;
+  color: var(--rose);
+  font-size: 85px;
+  line-height: 1.2;
+  animation: heartBeat 1.2s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  35% { transform: scale(1.12); }
+  55% { transform: scale(.96); }
+}
+
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+  color: var(--gold);
+  animation: sparkleFloat 2s ease-in-out infinite alternate;
+}
+
+@keyframes sparkleFloat {
+  from { transform: translateY(8px) rotate(0deg); opacity: .3; }
+  to { transform: translateY(-12px) rotate(20deg); opacity: 1; }
+}
+
+/* Treasure chest */
+
+#chestButton {
+  width: min(100%, 340px);
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+#chestSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+#chestLid {
+  transform-box: view-box;
+  transform-origin: 150px 104px;
+  transition: transform .8s ease;
+}
+
+#chestButton.opened #chestLid {
+  transform: rotate(-28deg) translate(-7px, -10px);
+}
+
+#chestGlow {
+  opacity: 0;
+  transition: opacity .7s ease;
+}
+
+#chestButton.opened #chestGlow { opacity: 1; }
+
+/* Letter */
+
+.letter {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  margin: 22px auto 0;
+  padding: 28px 24px;
+  text-align: left;
+  background: linear-gradient(145deg, #fffdf8, #fff3e3);
+  border: 1px solid #ead5bc;
+  box-shadow: 0 15px 35px #6f49301c;
+  max-height: 55vh;
+  max-height: 55dvh;
+  overflow-y: auto;
+  animation: unfold .9s ease both;
+}
+
+@keyframes unfold {
+  from { opacity: 0; transform: translateY(35px) scale(.85); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.letter h2 {
+  color: var(--burgundy);
+  font-size: 27px;
+  font-weight: normal;
+}
+
+.letter p {
+  color: #624a42;
+  font-size: 16px;
+  line-height: 1.85;
+  white-space: pre-line;
+}
+
+.letter .signature {
+  color: var(--burgundy);
+  font-style: italic;
+}
+
+@media (max-height: 700px) {
+  .scene { padding: 15px; }
+  #bowSvg { max-height: 43vh; }
+  .intro { margin-bottom: 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SCENE 1: BOW AND ARROW -->
+
+<section class="scene" id="opening">
+<div class="card">
+
+<p class="eyebrow">A tiny surprise, just for you</p>
+
+<h1>Ready, birthday girl?</h1>
+
+<p class="intro">
+Pull back the little arrow, then let it fly.
+There's a little bit of love waiting at the other end. 🤍
+</p>
+
+<svg id="bowSvg" viewBox="0 0 360 285"
+     role="img" aria-label="Pull the arrow backwards and release it">
+
+<defs>
+  <linearGradient id="bowColor" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#bd7a83"/>
+    <stop offset="100%" stop-color="#783347"/>
+  </linearGradient>
+
+  <linearGradient id="heartColor" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#f0b5bf"/>
+    <stop offset="100%" stop-color="#d77d91"/>
+  </linearGradient>
+</defs>
+
+<ellipse cx="175" cy="252" rx="125" ry="9"
+         fill="#b58e7c" opacity=".12"/>
+
+<!-- Target heart -->
+
+<g id="targetHeart" transform="translate(255 104)">
+  <path d="M0 18
+    C-30 -8 -53 15 -42 39
+    C-34 57 -10 75 0 82
+    C10 75 34 57 42 39
+    C53 15 30 -8 0 18Z"
+    fill="url(#heartColor)"
+    stroke="#c76e83" stroke-width="2"/>
+
+  <path d="M-25 24 Q-20 14 -9 22"
+        stroke="#fff8ef" stroke-width="4"
+        fill="none" stroke-linecap="round"
+        opacity=".8"/>
+
+  <circle cx="40" cy="0" r="3" fill="#d9b66f"/>
+</g>
+
+<!-- Bow -->
+
+<path id="bowBody"
+      d="M91 48 Q147 150 91 252"
+      fill="none" stroke="url(#bowColor)"
+      stroke-width="9" stroke-linecap="round"/>
+
+<path id="bowHighlight"
+      d="M96 57 Q143 150 96 243"
+      fill="none" stroke="#e9b3b8"
+      stroke-width="2" opacity=".8"/>
+
+<!-- String -->
+
+<path id="bowString"
+      d="M91 48 L111 150 L91 252"
+      fill="none" stroke="#b58a6a"
+      stroke-width="2"/>
+
+<!-- Arrow -->
+
+<g id="arrowGroup" transform="translate(0 0)">
+  <line x1="111" y1="150" x2="229" y2="150"
+        stroke="#8f4052" stroke-width="3.5"
+        stroke-linecap="round"/>
+
+  <path d="M229 150 L215 142 L218 150 L215 158Z"
+        fill="#8f4052"/>
+
+  <path d="M116 150 L103 140 L107 150Z"
+        fill="#d9b66f"/>
+
+  <path d="M116 150 L103 160 L107 150Z"
+        fill="#d9b66f"/>
+
+  <circle cx="112" cy="150" r="3" fill="#d9b66f"/>
+</g>
+
+<text x="180" y="277" text-anchor="middle"
+      font-family="system-ui,sans-serif"
+      font-size="10" letter-spacing="2"
+      fill="#b18e7d">A LITTLE SHOT OF LOVE</text>
+
+</svg>
+
+<p class="hint" id="pullHint">
+Touch the arrow and pull it back ↙
+</p>
+
+<button class="main-btn hidden" id="retryButton">
+Try again
+</button>
+
+<p class="footer">Made for a very special birthday 🤍</p>
+</div>
+</section>
+
+
+<!-- SCENE 2: BIRTHDAY REVEAL -->
+
+<section class="scene hidden" id="birthday">
+<div class="card">
+
+<span class="sparkle" style="top:5%;left:10%;font-size:25px">✦</span>
+<span class="sparkle" style="top:15%;right:8%;font-size:22px">✧</span>
+<span class="sparkle" style="bottom:20%;left:12%;font-size:20px">♡</span>
+<span class="sparkle" style="bottom:22%;right:10%;font-size:25px">✦</span>
+
+<p class="eyebrow">Today is all about you</p>
+
+<div class="heart-icon">♥</div>
+
+<h1>Happy Birthday,<br>Aabhyanshi!</h1>
+
+<p class="intro">
+I hope your day feels as lovely, warm,
+and special as you make the world around you. 🤍
+</p>
+
+<button class="main-btn" id="showChest">
+There's one last thing…
+</button>
+
+<p class="footer">A little more magic is waiting</p>
+</div>
+</section>
+
+
+<!-- SCENE 3: TREASURE CHEST -->
+
+<section class="scene hidden" id="treasure">
+<div class="card">
+
+<p class="eyebrow">One last little surprise</p>
+
+<h1>A little something<br>for you</h1>
+
+<p class="intro">
+There's something tucked away inside.
+Open it when you're ready. 🤍
+</p>
+
+<button id="chestButton" aria-label="Open the treasure chest">
+
+<svg id="chestSvg" viewBox="0 0 300 225">
+
+<defs>
+  <linearGradient id="woodColor" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#b97562"/>
+    <stop offset="100%" stop-color="#7e443c"/>
+  </linearGradient>
+
+  <radialGradient id="glowColor">
+    <stop offset="0%" stop-color="#ffe8a7" stop-opacity=".95"/>
+    <stop offset="100%" stop-color="#ffe8a7" stop-opacity="0"/>
+  </radialGradient>
+
+  <linearGradient id="goldColor" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#f2d995"/>
+    <stop offset="100%" stop-color="#c89a45"/>
+  </linearGradient>
+</defs>
+
+<ellipse cx="150" cy="196" rx="104" ry="12"
+         fill="#b58e7c" opacity=".18"/>
+
+<ellipse id="chestGlow" cx="150" cy="110"
+         rx="115" ry="85" fill="url(#glowColor)"/>
+
+<!-- Letter peek -->
+
+<g id="letterPeek" opacity="0">
+  <path d="M111 112 L111 63 Q111 58 117 58
+           L183 58 Q189 58 189 63 L189 116Z"
+        fill="#fff8e8" stroke="#d9c3a5" stroke-width="2"/>
+
+  <path d="M123 73 L177 73 M123 82 L172 82"
+        stroke="#d6b8a0" stroke-width="2"
+        stroke-linecap="round"/>
+
+  <path d="M150 99
+           C136 85 127 99 138 108
+           L150 117 L162 108
+           C173 99 164 85 150 99Z"
+        fill="#d98c9a"/>
+</g>
+
+<!-- Chest base -->
+
+<path d="M46 107 Q46 99 57 99
+         L243 99 Q254 99 254 111
+         L244 184 Q243 193 232 193
+         L68 193 Q57 193 56 184Z"
+      fill="url(#woodColor)" stroke="#704039" stroke-width="3"/>
+
+<path d="M61 119 L239 119 L231 178 L69 178Z"
+      fill="#9b5a4b" stroke="#d9b66f" stroke-width="4"/>
+
+<path d="M79 123 L79 177 M221 123 L221 177"
+      stroke="#d9b66f" stroke-width="4"/>
+
+<path d="M46 112 L254 112"
+      stroke="#e4c16e" stroke-width="7"/>
+
+<!-- Lid -->
+
+<g id="chestLid">
+  <path d="M54 111 L54 85
+           Q58 42 103 35
+           L197 35 Q242 42 246 85
+           L246 111Z"
+        fill="url(#woodColor)" stroke="#704039" stroke-width="3"/>
+
+  <path d="M72 94 Q77 56 108 52
+           L192 52 Q223 56 228 94"
+        fill="none" stroke="#d69a78" stroke-width="3"/>
+
+  <path d="M73 100 L227 100"
+        stroke="#d9b66f" stroke-width="5"/>
+
+  <path d="M89 50 L89 99 M211 50 L211 99"
+        stroke="#d9b66f" stroke-width="4"/>
+</g>
+
+<!-- Lock -->
+
+<rect x="134" y="104" width="32" height="44"
+      rx="5" fill="url(#goldColor)" stroke="#a77a32" stroke-width="2"/>
+
+<circle cx="150" cy="121" r="4" fill="#8f4052"/>
+
+<path d="M150 125 L150 134"
+      stroke="#8f4052" stroke-width="3"
+      stroke-linecap="round"/>
+
+<path d="M72 185 L228 185"
+      stroke="#d9b66f" stroke-width="3"/>
+
+</svg>
+
+</button>
+
+<p class="hint" id="chestHint">Tap the chest to open it ✨</p>
+
+<!-- PERSONAL LETTER -->
+
+<div class="letter hidden" id="letterPanel">
+
+<p class="eyebrow">A little letter, just for you</p>
+
+<h2>To my birthday girl…</h2>
+
+<p id="letterText">Happy Birthday, Mon Coeur. 🤍
+
+I hope this new year of your life brings you gentle days, little reasons to smile, and so many moments that make you feel loved and appreciated.
+
+I'm grateful for all the memories we've made and for the little world that has grown between us.
+
+No matter how busy life gets, I hope you always remember how special you are and how much happiness you bring just by being yourself.
+
+Today is your day. I hope it gives you even a little of the warmth you give to the people around you.
+
+Keep smiling, keep dreaming, and keep being wonderfully you. 🤍</p>
+
+<p class="signature">With all my love,<br>Yash ♡</p>
+
+<p class="hint" style="text-align:center">
+P.S. This little letter is yours to keep. ♡
+</p>
+
+</div>
+
+<p class="footer" id="letterFooter">
+Some things are better when opened slowly 🤍
+</p>
+
+</div>
+</section>
+
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+
+  const opening = $("opening");
+  const birthday = $("birthday");
+  const treasure = $("treasure");
+
+  const svg = $("bowSvg");
+  const arrow = $("arrowGroup");
+  const string = $("bowString");
+  const bow = $("bowBody");
+  const highlight = $("bowHighlight");
+  const heart = $("targetHeart");
+  const hint = $("pullHint");
+  const retry = $("retryButton");
+
+  let dragging = false;
+  let flying = false;
+  let shot = false;
+  let pointerId = null;
+  let pullDistance = 0;
+  let startX = 0;
+  let startY = 0;
+
+  const maxPull = 55;
+
+  function moveArrow(dx, dy) {
+    arrow.setAttribute("transform", `translate(${dx} ${dy})`);
+
+    const bend = Math.min(maxPull, Math.max(0, -dx));
+    const stringX = 111 + dx;
+    const stringY = 150 + dy;
+
+    string.setAttribute(
+      "d",
+      `M91 48 Q${stringX} ${stringY} 91 252`
+    );
+
+    bow.setAttribute(
+      "d",
+      `M91 48 Q${147 - bend * .35} 150 91 252`
+    );
+
+    highlight.setAttribute(
+      "d",
+      `M96 57 Q${143 - bend * .3} 150 96 243`
+    );
+
+    pullDistance = Math.hypot(dx, dy);
+  }
+
+  function getPoint(event) {
+    const rect = svg.getBoundingClientRect();
+
+    return {
+      x: (event.clientX - rect.left) * 360 / rect.width,
+      y: (event.clientY - rect.top) * 285 / rect.height
+    };
+  }
+
+  arrow.addEventListener("pointerdown", event => {
+    if (flying || shot) return;
+
+    dragging = true;
+    pointerId = event.pointerId;
+
+    try {
+      arrow.setPointerCapture(pointerId);
+    } catch (_) {}
+
+    const point = getPoint(event);
+    startX = point.x;
+    startY = point.y;
+
+    hint.textContent = "Let go when you're ready 💗";
+    event.preventDefault();
+  });
+
+  arrow.addEventListener("pointermove", event => {
+    if (!dragging || event.pointerId !== pointerId) return;
+
+    const point = getPoint(event);
+
+    // Pull backwards, with a little vertical freedom.
+    const dx = Math.max(-maxPull, Math.min(0, point.x - 111));
+    const dy = Math.max(-35, Math.min(35, point.y - 150));
+
+    moveArrow(dx, dy);
+    event.preventDefault();
+  });
+
+  function releaseArrow(event) {
+    if (!dragging) return;
+    if (event && event.pointerId !== pointerId) return;
+
+    dragging = false;
+
+    if (pullDistance > 10) {
+      launchArrow();
+    } else {
+      moveArrow(0, 0);
+      hint.textContent = "Pull the arrow back a little further ↙";
+    }
+  }
+
+  arrow.addEventListener("pointerup", releaseArrow);
+  arrow.addEventListener("pointercancel", releaseArrow);
+
+  function launchArrow() {
+    if (flying || shot) return;
+
+    flying = true;
+    shot = true;
+    arrow.style.pointerEvents = "none";
+    hint.textContent = "A little love, on its way…";
+
+    const transform = arrow.getAttribute("transform");
+    const match = transform.match(
+      /translate\(([-\d.]+)[ ,]+([-\d.]+)\)/
+    );
+
+    const dx = match ? Number(match[1]) : 0;
+    const dy = match ? Number(match[2]) : 0;
+
+    const flight = arrow.animate([
+      { transform: `translate(${dx}px, ${dy}px)` },
+      { transform: "translate(100px, -7px)" }
+    ], {
+      duration: 650,
+      easing: "cubic-bezier(.18,.7,.25,1)",
+      fill: "forwards"
+    });
+
+    flight.onfinish = () => {
+      arrow.style.opacity = "0";
+      popHeart();
+    };
+  }
+
+  function makeParticles() {
+    const colors = ["#d98c9a", "#f0b5bf", "#d9b66f", "#8f4052"];
+
+    for (let i = 0; i < 24; i++) {
+      const particle = document.createElement("span");
+      const angle = Math.PI * 2 * i / 24;
+      const distance = 35 + Math.random() * 65;
+
+      particle.textContent = i % 3 === 0 ? "♡" : "✦";
+      particle.style.position = "absolute";
+      particle.style.left = "70%";
+      particle.style.top = "43%";
+      particle.style.color = colors[i % colors.length];
+      particle.style.fontSize = (10 + Math.random() * 10) + "px";
+      particle.style.pointerEvents = "none";
+      particle.style.zIndex = "5";
+
+      opening.querySelector(".card").appendChild(particle);
+
+      const animation = particle.animate([
+        {
+          transform: "translate(-50%,-50%) scale(1)",
+          opacity: 1
+        },
+        {
+          transform:
+            `translate(calc(-50% + ${Math.cos(angle) * distance}px),` +
+            `calc(-50% + ${Math.sin(angle) * distance}px)) scale(.1)`,
+          opacity: 0
+        }
+      ], {
+        duration: 750 + Math.random() * 350,
+        easing: "ease-out",
+        fill: "forwards"
+      });
+
+      animation.onfinish = () => particle.remove();
+    }
+  }
+
+  function popHeart() {
+    heart.animate([
+      { transform: "translate(255px,104px) scale(1)", opacity: 1 },
+      { transform: "translate(255px,104px) scale(1.2,.8)", opacity: 1, offset: .25 },
+      { transform: "translate(255px,104px) scale(1.3)", opacity: .8, offset: .55 },
+      { transform: "translate(255px,104px) scale(.05)", opacity: 0 }
+    ], {
+      duration: 500,
+      easing: "ease-out",
+      fill: "forwards"
+    });
+
+    makeParticles();
+
+    setTimeout(() => {
+      opening.classList.add("hidden");
+      birthday.classList.remove("hidden");
+      birthday.classList.add("fade-in");
+    }, 700);
+  }
+
+  retry.addEventListener("click", () => {
+    dragging = false;
+    flying = false;
+    shot = false;
+    pullDistance = 0;
+
+    moveArrow(0, 0);
+    arrow.style.opacity = "1";
+    arrow.style.pointerEvents = "auto";
+    string.style.opacity = "1";
+    hint.textContent = "Touch the arrow and pull it back ↙";
+    retry.classList.add("hidden");
+  });
+
+  $("showChest").addEventListener("click", () => {
+    birthday.classList.add("hidden");
+    treasure.classList.remove("hidden");
+    treasure.classList.add("fade-in");
+  });
+
+  const chestButton = $("chestButton");
+  const chestHint = $("chestHint");
+  const letterPeek = $("letterPeek");
+  const letterPanel = $("letterPanel");
+
+  chestButton.addEventListener("click", () => {
+    if (chestButton.classList.contains("opened")) return;
+
+    chestButton.classList.add("opened");
+    chestButton.setAttribute("aria-label", "Treasure chest opened");
+    chestHint.textContent = "A little letter, just for you…";
+
+    letterPeek.animate([
+      { opacity: 0, transform: "translateY(10px)" },
+      { opacity: 1, transform: "translateY(-25px)" }
+    ], {
+      duration: 650,
+      easing: "ease-out",
+      fill: "forwards"
+    });
+
+    setTimeout(() => {
+      letterPanel.classList.remove("hidden");
+      letterPanel.classList.add("fade-in");
+      chestHint.textContent = "A note from me to you 🤍";
+      $("letterFooter").textContent = "Keep this little piece of your birthday 🤍";
+    }, 700);
+  });
+})();
+</script>
+
+</body>
+</html>
