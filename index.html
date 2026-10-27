@@ -2,363 +2,742 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#fff8ef">
-
-<title>A Little Birthday Surprise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#fff6f8">
+<title>A Little Surprise 💗</title>
 
 <style>
-:root {
-  --cream: #fff8ef;
-  --pink: #e9a0b0;
-  --lavender: #c5b4e8;
-  --yellow: #f3d77d;
-  --blue: #a8d5ed;
-  --mint: #a8d9c0;
-  --burgundy: #8f4052;
-  --brown: #59443e;
-}
-
 * {
   box-sizing: border-box;
 }
 
+:root {
+  --pink: #f49abb;
+  --deep-pink: #b85480;
+  --purple: #c0a7f4;
+  --cream: #fff7f0;
+  --text: #714b65;
+}
+
 body {
   margin: 0;
-  min-height: 100vh;
-  min-height: 100dvh;
-  background:
-    radial-gradient(ellipse at top, #fffdf9 0%, var(--cream) 75%);
-  color: var(--brown);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  background: var(--cream);
+  color: var(--text);
   text-align: center;
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
-.scene {
-  min-height: 100vh;
-  min-height: 100dvh;
-  padding: 28px 15px;
-  display: flex;
+.screen {
+  display: none;
+  min-height: 100svh;
+  width: 100%;
+  padding: 26px 16px;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
-.card {
-  width: 100%;
-  max-width: 460px;
-  margin: auto;
-  position: relative;
+.screen.active {
+  display: flex;
+  animation: screenIn .65s ease both;
+}
+
+@keyframes screenIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+h1, h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--deep-pink);
+}
+
+p {
+  line-height: 1.7;
+}
+
+.primary-btn {
+  border: 0;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #ee9cbd, #c88fe2);
+  color: white;
+  padding: 14px 24px;
+  margin-top: 20px;
+  box-shadow: 0 7px 18px #c783a533;
+  transition: transform .2s;
+}
+
+.primary-btn:active {
+  transform: scale(.96);
 }
 
 .hidden {
   display: none !important;
 }
 
-.eyebrow {
-  color: #a77578;
-  font-family: system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
+/* =====================================
+   SCREEN 1 — SECRET BALLOONS
+===================================== */
+
+#balloonScreen {
+  background:
+    radial-gradient(circle at 10% 10%, #ffe4ef, transparent 40%),
+    radial-gradient(circle at 90% 90%, #ece5ff, transparent 40%),
+    var(--cream);
+  justify-content: flex-start;
+  padding-top: max(35px, 6svh);
 }
 
-h1 {
-  color: var(--burgundy);
-  font-size: clamp(32px, 9vw, 46px);
-  font-weight: normal;
-  line-height: 1.16;
-  margin: 12px 0;
+#balloonScreen h1 {
+  font-size: clamp(28px, 7vw, 40px);
+  margin: 0 0 8px;
 }
 
-.intro {
-  max-width: 335px;
-  margin: 0 auto 15px;
-  color: #80665d;
+.subtitle {
+  color: #9a7a91;
   font-size: 15px;
-  line-height: 1.7;
+  margin: 0;
 }
 
-.hint {
-  color: #a17b76;
-  font-family: system-ui, sans-serif;
-  font-size: 12px;
-  line-height: 1.6;
-  margin: 8px auto;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.main-btn {
-  border: none;
-  border-radius: 28px;
-  padding: 14px 25px;
-  margin-top: 20px;
-  color: white;
-  background: var(--burgundy);
-  box-shadow: 0 6px 18px #8f405225;
-  font-size: 14px;
-  transition: transform .2s, box-shadow .2s;
-}
-
-.main-btn:active {
-  transform: scale(.96);
-}
-
-.main-btn:focus-visible,
-.balloon:focus-visible {
-  outline: 3px solid var(--burgundy);
-  outline-offset: 5px;
-}
-
-/* BALLOON FIELD */
-
-#balloonSvg {
-  display: block;
-  width: 100%;
-  max-width: 390px;
-  height: auto;
-  margin: 5px auto 0;
-  overflow: visible;
+.balloon-field {
+  position: relative;
+  width: min(400px, 100%);
+  height: min(440px, 53svh);
+  min-height: 325px;
+  margin: 15px auto 0;
 }
 
 .balloon {
-  cursor: pointer;
-  transform-box: fill-box;
+  position: absolute;
+  width: 84px;
+  height: 130px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  animation: balloonFloat 3s ease-in-out infinite;
+  touch-action: manipulation;
   transform-origin: center;
-  animation: float 3s ease-in-out infinite;
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
 }
 
-.balloon:nth-of-type(2) {
-  animation-delay: -.7s;
+.balloon:nth-child(1) {
+  left: 5%;
+  top: 12%;
 }
 
-.balloon:nth-of-type(3) {
-  animation-delay: -1.4s;
+.balloon:nth-child(2) {
+  left: 37%;
+  top: 2%;
+  animation-delay: -.8s;
 }
 
-.balloon:nth-of-type(4) {
-  animation-delay: -1s;
+.balloon:nth-child(3) {
+  right: 4%;
+  top: 15%;
+  animation-delay: -1.5s;
 }
 
-.balloon:nth-of-type(5) {
-  animation-delay: -.4s;
+.balloon:nth-child(4) {
+  left: 18%;
+  top: 53%;
+  animation-delay: -1.1s;
 }
 
-.balloon.popped {
-  animation: pop .22s ease-out forwards !important;
-  pointer-events: none;
+.balloon:nth-child(5) {
+  right: 17%;
+  top: 52%;
+  animation-delay: -.5s;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(-1deg);
-  }
-
-  50% {
-    transform: translateY(-7px) rotate(1deg);
-  }
+.balloon-body {
+  position: absolute;
+  width: 76px;
+  height: 92px;
+  top: 0;
+  left: 4px;
+  border-radius: 50% 50% 46% 46%;
+  box-shadow:
+    inset -9px -9px 14px #00000010,
+    inset 9px 8px 13px #ffffff66,
+    0 7px 15px #76516a12;
 }
 
-@keyframes pop {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  65% {
-    transform: scale(1.2);
-    opacity: .8;
-  }
-
-  100% {
-    transform: scale(.05);
-    opacity: 0;
-  }
+.balloon-body::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 13px;
+  width: 11px;
+  height: 25px;
+  border-radius: 50%;
+  background: #ffffff66;
+  transform: rotate(25deg);
 }
 
-.balloon-word {
-  font-family: system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .5px;
-  fill: #654c50;
-  pointer-events: none;
+.balloon-body::after {
+  content: "";
+  position: absolute;
+  left: 32px;
+  bottom: -7px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid var(--knot);
 }
 
 .balloon-string {
-  fill: none;
-  stroke: #c7a9a0;
-  stroke-width: 1.2;
+  position: absolute;
+  left: 42px;
+  top: 101px;
+  height: 25px;
+  width: 1px;
+  background: #a78b9c88;
+}
+
+.balloon.pink .balloon-body {
+  background: #ff9fbd;
+  --knot: #ed7fa4;
+}
+
+.balloon.purple .balloon-body {
+  background: #c2a7f5;
+  --knot: #a98ae7;
+}
+
+.balloon.yellow .balloon-body {
+  background: #ffdf7e;
+  --knot: #e8bf51;
+}
+
+.balloon.blue .balloon-body {
+  background: #8bd8f5;
+  --knot: #63bce0;
+}
+
+.balloon.mint .balloon-body {
+  background: #91e3bf;
+  --knot: #69cba0;
+}
+
+@keyframes balloonFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(3deg);
+  }
+}
+
+.balloon.popping {
   pointer-events: none;
+  animation: balloonPop .32s ease-out forwards;
 }
 
-/* WORDS FLY INTO THEIR PLACES */
-
-.sentence {
-  margin: 10px auto 0;
-  padding: 8px 0;
-  opacity: .9;
+@keyframes balloonPop {
+  0% { opacity: 1; scale: 1; }
+  35% { opacity: 1; scale: 1.22; }
+  100% { opacity: 0; scale: .05; }
 }
 
-.sentence-line {
+.particle {
+  position: fixed;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  z-index: 100;
+  pointer-events: none;
+  animation: particleBurst .65s ease-out forwards;
+}
+
+@keyframes particleBurst {
+  from {
+    opacity: 1;
+    transform: translate(0,0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--dx),var(--dy)) scale(.1);
+  }
+}
+
+/* Message begins completely empty. */
+
+.secret-message {
+  width: min(360px, 100%);
+  min-height: 48px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: clamp(4px, 2vw, 10px);
-  min-height: 39px;
-  white-space: nowrap;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 5px 9px;
+  margin-top: 0;
 }
 
 .word-slot {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 38px;
-  color: var(--burgundy);
-  font-size: clamp(17px, 5.2vw, 25px);
+  min-height: 30px;
+  font-family: Georgia, serif;
   font-weight: bold;
-  letter-spacing: .2px;
-  opacity: .13;
-  transition: opacity .35s, transform .35s;
+  font-size: clamp(19px, 5.2vw, 25px);
+  color: var(--deep-pink);
 }
 
 .word-slot.filled {
-  opacity: 1;
-  animation: wordLand .55s cubic-bezier(.2, 1.5, .5, 1);
+  animation: wordLand .45s cubic-bezier(.2,1.5,.5,1);
 }
 
 @keyframes wordLand {
-  0% {
+  from {
+    opacity: 0;
     transform: scale(.6) translateY(8px);
   }
-
-  65% {
-    transform: scale(1.12) translateY(-2px);
-  }
-
-  100% {
+  to {
+    opacity: 1;
     transform: scale(1) translateY(0);
   }
 }
 
-#flyingWord {
+.flying-word {
   position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 100;
+  z-index: 110;
   pointer-events: none;
-  color: var(--burgundy);
-  font-family: system-ui, sans-serif;
-  font-size: 20px;
-  font-weight: 800;
+  font: bold 22px Georgia, serif;
+  color: var(--deep-pink);
   white-space: nowrap;
-  text-shadow: 0 2px 10px #8f405220;
-  display: none;
 }
 
-.sentence.complete {
-  animation: sentenceGlow 1.5s ease-in-out infinite alternate;
+.progress {
+  font-size: 12px;
+  color: #b49aac;
+  margin-top: 5px;
 }
 
-@keyframes sentenceGlow {
+/* =====================================
+   SCREEN 2 — INTERACTIVE BOW & ARROW
+===================================== */
+
+#arrowScreen {
+  background:
+    radial-gradient(circle at 85% 10%, #ffe0eb, transparent 38%),
+    radial-gradient(circle at 10% 90%, #e8e0ff, transparent 40%),
+    #fff9f4;
+}
+
+#arrowScreen h1 {
+  font-size: clamp(28px, 7vw, 39px);
+  margin: 0 0 8px;
+}
+
+#arrowScreen .subtitle {
+  max-width: 300px;
+}
+
+.archery-area {
+  width: min(390px, 100%);
+  height: min(450px, 57svh);
+  min-height: 340px;
+  position: relative;
+  margin-top: 15px;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Heart target */
+
+.heart-target {
+  position: absolute;
+  right: 6%;
+  top: 3%;
+  font-size: 65px;
+  filter: drop-shadow(0 5px 9px #d85c8d33);
+  animation: targetBeat 1.2s ease-in-out infinite;
+  transform-origin: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.heart-target::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #f1a4c355;
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  animation: targetPulse 2s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes targetBeat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes targetPulse {
+  0% {
+    opacity: .8;
+    scale: .5;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.5;
+  }
+}
+
+/* Faint decorative shooting line */
+
+.trajectory {
+  position: absolute;
+  left: 25%;
+  top: 42%;
+  width: 48%;
+  border-top: 2px dashed #d5b7d477;
+  transform: rotate(-43deg);
+  pointer-events: none;
+}
+
+/* Bow */
+
+.bow-art {
+  position: absolute;
+  width: 105px;
+  height: 160px;
+  left: 5%;
+  bottom: 10%;
+  pointer-events: none;
+}
+
+.bow-art svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Arrow can be dragged backwards. */
+
+.arrow-projectile {
+  position: absolute;
+  left: 19%;
+  bottom: 24%;
+  width: 100px;
+  height: 100px;
+  z-index: 5;
+  transform: translate(0,0);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.arrow-projectile svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.arrow-projectile.dragging {
+  cursor: grabbing;
+  filter: drop-shadow(0 3px 5px #b8548044);
+}
+
+.arrow-projectile.gone {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Release animation is calculated to reach the heart. */
+
+.launch-btn {
+  margin-top: 8px;
+}
+
+.launch-btn:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.impact-ring {
+  position: absolute;
+  right: 6%;
+  top: 3%;
+  width: 65px;
+  height: 65px;
+  border: 3px solid #f49abb;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.impact-ring.burst {
+  animation: heartBurst .7s ease-out forwards;
+}
+
+@keyframes heartBurst {
+  0% {
+    opacity: 1;
+    scale: .5;
+  }
+  100% {
+    opacity: 0;
+    scale: 2.7;
+  }
+}
+
+.sparkle {
+  position: fixed;
+  z-index: 200;
+  pointer-events: none;
+  font-size: 20px;
+  animation: sparkleFly .8s ease-out forwards;
+}
+
+@keyframes sparkleFly {
   from {
-    filter: drop-shadow(0 0 0 transparent);
+    opacity: 1;
+    transform: translate(0,0) scale(.7) rotate(0deg);
   }
-
   to {
-    filter: drop-shadow(0 2px 9px #e9a0b077);
+    opacity: 0;
+    transform: translate(var(--dx),var(--dy)) scale(1.4) rotate(80deg);
   }
 }
 
-#allDone {
-  animation: appear .7s ease both;
+/* =====================================
+   SCREEN 3 — SHORT BIRTHDAY REVEAL
+===================================== */
+
+#birthdayScreen {
+  background:
+    radial-gradient(circle at 10% 15%, #ffdfec, transparent 38%),
+    radial-gradient(circle at 90% 85%, #e7dfff, transparent 40%),
+    #fff8f1;
 }
 
-@keyframes appear {
+.birthday-heart {
+  font-size: clamp(65px, 17vw, 100px);
+  animation: targetBeat 1.3s ease-in-out infinite;
+}
+
+.birthday-title {
+  font-size: clamp(35px, 9vw, 52px);
+  line-height: 1.2;
+  margin: 12px 0;
+  animation: revealText .8s ease both;
+}
+
+.birthday-message {
+  font-family: Georgia, serif;
+  line-height: 1.9;
+  font-size: clamp(17px, 4.4vw, 20px);
+  color: #8b6480;
+  margin: 8px auto 12px;
+  animation: revealText 1s .25s both;
+}
+
+.signature {
+  color: #bb789d;
+  font-size: 15px;
+}
+
+@keyframes revealText {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(15px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.footer {
-  margin-top: 22px;
-  color: #b49a8a;
-  font-family: system-ui, sans-serif;
-  font-size: 10px;
-  letter-spacing: .7px;
+/* =====================================
+   SCREEN 4 — TREASURE CHEST
+===================================== */
+
+#chestScreen {
+  background:
+    radial-gradient(circle at 10% 10%, #ffe4ee, transparent 38%),
+    radial-gradient(circle at 90% 90%, #e9e0ff, transparent 40%),
+    #fff9f2;
 }
 
-/* BIRTHDAY REVEAL */
-
-.birthday-heart {
-  font-family: system-ui, sans-serif;
-  font-size: 76px;
-  color: var(--pink);
-  margin: 12px 0;
-  animation: heartbeat 1.3s ease-in-out infinite;
+#chestScreen h1 {
+  font-size: clamp(30px, 8vw, 41px);
+  margin: 0 0 5px;
 }
 
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  35% { transform: scale(1.13); }
-  55% { transform: scale(.97); }
+.chest-subtitle {
+  font-size: 14px;
+  color: #9b7d92;
+  margin: 0 auto 18px;
 }
 
-.birthday-message {
-  max-width: 330px;
-  margin: 18px auto;
-  color: #80665d;
-  font-size: 16px;
-  line-height: 1.8;
+.chest-button {
+  position: relative;
+  width: 220px;
+  height: 180px;
+  flex-shrink: 0;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 5px 0 12px;
+  animation: chestFloat 2.8s ease-in-out infinite;
 }
 
-.sparkles {
-  color: #c9a45d;
-  font-size: 20px;
-  letter-spacing: 12px;
-  margin: 18px 0;
+@keyframes chestFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
 }
 
-@media (max-width: 360px) {
-  .scene {
-    padding: 22px 10px;
+.chest-base {
+  position: absolute;
+  left: 24px;
+  top: 80px;
+  width: 172px;
+  height: 82px;
+  background: linear-gradient(120deg,#d49a60,#a76537);
+  border: 4px solid #89522e;
+  border-radius: 5px 5px 17px 17px;
+  box-shadow: 0 12px 20px #9b673a33;
+}
+
+.chest-base::before {
+  content: "";
+  position: absolute;
+  left: 72px;
+  top: -2px;
+  width: 18px;
+  height: 76px;
+  background: #f5d582;
+  border-left: 2px solid #b98a3a;
+  border-right: 2px solid #b98a3a;
+}
+
+.chest-base::after {
+  content: "✦";
+  position: absolute;
+  left: 74px;
+  top: 24px;
+  font-size: 22px;
+  color: #fff1b8;
+}
+
+.chest-lid {
+  position: absolute;
+  left: 28px;
+  top: 22px;
+  width: 164px;
+  height: 65px;
+  border: 4px solid #89522e;
+  border-radius: 55% 55% 8px 8px;
+  background: linear-gradient(#dba36a,#b97844);
+  transform-origin: bottom center;
+  transition: transform .7s ease;
+  z-index: 2;
+}
+
+.chest-lid::after {
+  content: "";
+  position: absolute;
+  left: 70px;
+  top: 17px;
+  width: 14px;
+  height: 25px;
+  border-radius: 4px;
+  background: #f5d582;
+  border: 2px solid #b98a3a;
+}
+
+.chest-button.opened {
+  animation: none;
+}
+
+.chest-button.opened .chest-lid {
+  transform: translateY(-31px) rotate(-17deg);
+}
+
+.chest-button.opened .chest-base {
+  box-shadow:
+    0 0 28px #ffd36d99,
+    0 12px 20px #9b673a33;
+}
+
+.letter {
+  display: none;
+  width: min(440px,100%);
+  text-align: left;
+  background: #fffdfb;
+  border: 1px solid #f0d4e2;
+  border-radius: 15px;
+  padding: 21px 19px;
+  box-shadow: 0 8px 24px #ad7a9c14;
+  line-height: 1.65;
+  font-size: 14px;
+  margin-bottom: 20px;
+  animation: revealText .8s ease both;
+}
+
+.letter.visible {
+  display: block;
+}
+
+.letter h2 {
+  text-align: center;
+  font-size: 23px;
+  margin: 0 0 12px;
+}
+
+.letter p {
+  margin: 10px 0;
+}
+
+.letter-sign {
+  text-align: right;
+  color: #b16e96;
+  font-family: Georgia, serif;
+  margin-top: 16px !important;
+  font-weight: bold;
+}
+
+@media (max-height: 700px) {
+  #balloonScreen {
+    padding-top: 20px;
   }
 
-  .balloon-word {
-    font-size: 11px;
+  .balloon-field {
+    height: 330px;
+    min-height: 290px;
+    margin-top: 5px;
   }
 
-  .sentence-line {
-    gap: 3px;
+  .balloon {
+    scale: .88;
   }
 
-  .word-slot {
-    font-size: 17px;
+  .archery-area {
+    height: 340px;
+    min-height: 300px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .balloon {
-    animation: none;
-  }
-
   *, *::before, *::after {
-    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
   }
 }
 </style>
@@ -366,500 +745,772 @@ button {
 
 <body>
 
-<!-- SCENE 1: FIVE BALLOONS -->
+<!-- =====================================
+     SCREEN 1 — SECRET BALLOONS
+===================================== -->
 
-<section class="scene" id="balloonScene">
-  <div class="card">
+<section id="balloonScreen" class="screen active">
 
-    <p class="eyebrow">A little surprise for you</p>
+  <h1>A Tiny Little Game 🎈</h1>
 
-    <h1>Five little balloons…</h1>
+  <p class="subtitle">
+    Five balloons are waiting for you.<br>
+    Tap them all and see what happens…
+  </p>
 
-    <p class="intro">
-      Each one is hiding a little word.
-      Tap them and see what they have to say. 🎈
-    </p>
+  <div class="balloon-field" id="balloonField">
 
-    <svg id="balloonSvg"
-         viewBox="0 0 360 345"
-         role="group"
-         aria-label="Five balloons. Tap each balloon to reveal its word.">
+    <button class="balloon pink" data-word="YOU"
+      aria-label="Pop balloon one" type="button">
+      <span class="balloon-body"></span>
+      <span class="balloon-string"></span>
+    </button>
 
-      <defs>
-        <linearGradient id="pinkGradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#f4c1cb"/>
-          <stop offset="100%" stop-color="#e49aaa"/>
-        </linearGradient>
+    <button class="balloon purple" data-word="ARE"
+      aria-label="Pop balloon two" type="button">
+      <span class="balloon-body"></span>
+      <span class="balloon-string"></span>
+    </button>
 
-        <linearGradient id="lavenderGradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#ded2f5"/>
-          <stop offset="100%" stop-color="#b9a5e2"/>
-        </linearGradient>
+    <button class="balloon yellow" data-word="SO"
+      aria-label="Pop balloon three" type="button">
+      <span class="balloon-body"></span>
+      <span class="balloon-string"></span>
+    </button>
 
-        <linearGradient id="yellowGradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#fff0ae"/>
-          <stop offset="100%" stop-color="#edcf69"/>
-        </linearGradient>
+    <button class="balloon blue" data-word="VERY"
+      aria-label="Pop balloon four" type="button">
+      <span class="balloon-body"></span>
+      <span class="balloon-string"></span>
+    </button>
 
-        <linearGradient id="blueGradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#d3effb"/>
-          <stop offset="100%" stop-color="#9bcce7"/>
-        </linearGradient>
-
-        <linearGradient id="mintGradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#d0f0df"/>
-          <stop offset="100%" stop-color="#9bd0b5"/>
-        </linearGradient>
-      </defs>
-
-      <!-- Tiny decorative stars -->
-
-      <g fill="#d7b879" opacity=".8">
-        <path d="M178 12 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3Z"/>
-        <path d="M330 156 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z"/>
-        <path d="M26 184 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z"/>
-        <circle cx="178" cy="322" r="2"/>
-        <circle cx="316" cy="45" r="2"/>
-        <circle cx="43" cy="48" r="2"/>
-      </g>
-
-      <!-- BALLOON 1: YOU -->
-
-      <g class="balloon"
-         data-word="YOU"
-         role="button"
-         tabindex="0"
-         aria-label="Pop balloon: YOU"
-         transform="translate(65 83)">
-
-        <ellipse cx="-5" cy="-12" rx="4" ry="7"
-                 fill="#fff" opacity=".3"
-                 transform="rotate(25 -5 -12)"/>
-
-        <ellipse cx="0" cy="0" rx="34" ry="43"
-                 fill="url(#pinkGradient)"
-                 stroke="#d98c9a" stroke-width="1.1"/>
-
-        <ellipse cx="-11" cy="-15" rx="5" ry="10"
-                 fill="#fff" opacity=".4"
-                 transform="rotate(25 -11 -15)"/>
-
-        <path d="M-4 42 L0 48 L4 42Z"
-              fill="#d98c9a"/>
-
-        <text class="balloon-word"
-              x="0" y="5" text-anchor="middle">YOU</text>
-
-        <path class="balloon-string"
-              d="M0 48 Q8 62 0 75 Q-5 86 3 96"/>
-      </g>
-
-      <!-- BALLOON 2: ARE -->
-
-      <g class="balloon"
-         data-word="ARE"
-         role="button"
-         tabindex="0"
-         aria-label="Pop balloon: ARE"
-         transform="translate(180 65)">
-
-        <ellipse cx="-5" cy="-12" rx="4" ry="7"
-                 fill="#fff" opacity=".3"
-                 transform="rotate(25 -5 -12)"/>
-
-        <ellipse cx="0" cy="0" rx="34" ry="43"
-                 fill="url(#lavenderGradient)"
-                 stroke="#b4a0dc" stroke-width="1.1"/>
-
-        <ellipse cx="-11" cy="-15" rx="5" ry="10"
-                 fill="#fff" opacity=".45"
-                 transform="rotate(25 -11 -15)"/>
-
-        <path d="M-4 42 L0 48 L4 42Z"
-              fill="#b9a5e2"/>
-
-        <text class="balloon-word"
-              x="0" y="5" text-anchor="middle">ARE</text>
-
-        <path class="balloon-string"
-              d="M0 48 Q-7 63 0 76 Q8 88 0 102"/>
-      </g>
-
-      <!-- BALLOON 3: SO -->
-
-      <g class="balloon"
-         data-word="SO"
-         role="button"
-         tabindex="0"
-         aria-label="Pop balloon: SO"
-         transform="translate(295 92)">
-
-        <ellipse cx="-5" cy="-12" rx="4" ry="7"
-                 fill="#fff" opacity=".35"
-                 transform="rotate(25 -5 -12)"/>
-
-        <ellipse cx="0" cy="0" rx="34" ry="43"
-                 fill="url(#yellowGradient)"
-                 stroke="#dfbf5e" stroke-width="1.1"/>
-
-        <ellipse cx="-11" cy="-15" rx="5" ry="10"
-                 fill="#fff" opacity=".45"
-                 transform="rotate(25 -11 -15)"/>
-
-        <path d="M-4 42 L0 48 L4 42Z"
-              fill="#edcf69"/>
-
-        <text class="balloon-word"
-              x="0" y="5" text-anchor="middle">SO</text>
-
-        <path class="balloon-string"
-              d="M0 48 Q8 61 0 76 Q-8 87 0 100"/>
-      </g>
-
-      <!-- BALLOON 4: VERY -->
-
-      <g class="balloon"
-         data-word="VERY"
-         role="button"
-         tabindex="0"
-         aria-label="Pop balloon: VERY"
-         transform="translate(112 210)">
-
-        <ellipse cx="-5" cy="-12" rx="4" ry="7"
-                 fill="#fff" opacity=".35"
-                 transform="rotate(25 -5 -12)"/>
-
-        <ellipse cx="0" cy="0" rx="36" ry="44"
-                 fill="url(#blueGradient)"
-                 stroke="#94c3dc" stroke-width="1.1"/>
-
-        <ellipse cx="-12" cy="-16" rx="5" ry="10"
-                 fill="#fff" opacity=".45"
-                 transform="rotate(25 -12 -16)"/>
-
-        <path d="M-4 43 L0 49 L4 43Z"
-              fill="#9bcce7"/>
-
-        <text class="balloon-word"
-              x="0" y="5" text-anchor="middle">VERY</text>
-
-        <path class="balloon-string"
-              d="M0 49 Q-8 64 0 78 Q7 89 0 101"/>
-      </g>
-
-      <!-- BALLOON 5: SPECIAL -->
-
-      <g class="balloon"
-         data-word="SPECIAL"
-         role="button"
-         tabindex="0"
-         aria-label="Pop balloon: SPECIAL"
-         transform="translate(252 218)">
-
-        <ellipse cx="-5" cy="-12" rx="4" ry="7"
-                 fill="#fff" opacity=".35"
-                 transform="rotate(25 -5 -12)"/>
-
-        <ellipse cx="0" cy="0" rx="42" ry="45"
-                 fill="url(#mintGradient)"
-                 stroke="#8fc6a8" stroke-width="1.1"/>
-
-        <ellipse cx="-15" cy="-16" rx="5" ry="10"
-                 fill="#fff" opacity=".45"
-                 transform="rotate(25 -15 -16)"/>
-
-        <path d="M-4 44 L0 50 L4 44Z"
-              fill="#9bd0b5"/>
-
-        <text class="balloon-word"
-              x="0" y="5" text-anchor="middle"
-              textLength="65" lengthAdjust="spacingAndGlyphs">SPECIAL</text>
-
-        <path class="balloon-string"
-              d="M0 50 Q8 65 0 78 Q-7 90 0 102"/>
-      </g>
-
-    </svg>
-
-    <p class="hint" id="tapHint">
-      Pop any balloon to begin ✨
-    </p>
-
-    <!-- Each word has a permanent destination.
-         Empty slots reserve space for the words. -->
-
-    <div class="sentence" id="sentence"
-         aria-label="You are so very special">
-
-      <div class="sentence-line">
-        <span class="word-slot" data-slot="YOU">YOU</span>
-        <span class="word-slot" data-slot="ARE">ARE</span>
-        <span class="word-slot" data-slot="SO">SO</span>
-      </div>
-
-      <div class="sentence-line">
-        <span class="word-slot" data-slot="VERY">VERY</span>
-        <span class="word-slot" data-slot="SPECIAL">SPECIAL</span>
-      </div>
-
-    </div>
-
-    <div id="allDone" class="hidden">
-      <p class="intro" style="margin-top:15px">
-        And every word is meant just for you. 🤍
-      </p>
-
-      <button class="main-btn" id="birthdayButton">
-        One more little surprise…
-      </button>
-    </div>
-
-    <p class="footer">Made with a little extra love ♡</p>
+    <button class="balloon mint" data-word="SPECIAL"
+      aria-label="Pop balloon five" type="button">
+      <span class="balloon-body"></span>
+      <span class="balloon-string"></span>
+    </button>
 
   </div>
+
+  <div class="secret-message" id="secretMessage"></div>
+
+  <div class="progress" id="progress">
+    Five little surprises remain ✨
+  </div>
+
+  <button class="primary-btn hidden" id="toArrow" type="button">
+    One more surprise →
+  </button>
+
 </section>
 
 
-<!-- SCENE 2: BIRTHDAY REVEAL -->
+<!-- =====================================
+     SCREEN 2 — BOW AND ARROW
+===================================== -->
 
-<section class="scene hidden" id="birthdayScene">
-  <div class="card">
+<section id="arrowScreen" class="screen">
 
-    <p class="eyebrow">Today is all about you</p>
+  <h1>A Little Cupid Moment 🏹</h1>
 
-    <div class="birthday-heart">♥</div>
+  <p class="subtitle">
+    Pull the arrow back…<br>
+    Then let your heart do the rest. 💗
+  </p>
 
-    <h1>Happy Birthday,<br>Aabhyanshi!</h1>
+  <div class="archery-area" id="archeryArea">
 
-    <div class="sparkles">✦ ♡ ✧</div>
+    <div class="heart-target" id="heartTarget">💗</div>
 
-    <p class="birthday-message">
-      You are so very special.
-      I hope your birthday brings you beautiful moments,
-      little reasons to smile, and memories you will
-      always want to keep. 🤍
-    </p>
+    <div class="impact-ring" id="impactRing"></div>
 
-    <p class="intro">
-      This is just the beginning of your little surprise.
-    </p>
+    <div class="trajectory"></div>
 
-    <p class="footer">Your day. Your little world. ♡</p>
+    <!-- Bow with a movable string -->
+
+    <div class="bow-art">
+      <svg viewBox="0 0 110 170" aria-hidden="true">
+
+        <path id="bowWood"
+          d="M80 12 Q-4 85 80 158"
+          fill="none"
+          stroke="#bd7957"
+          stroke-width="8"
+          stroke-linecap="round"/>
+
+        <path d="M80 12 Q42 85 80 158"
+          fill="none"
+          stroke="#f0cda7"
+          stroke-width="2.5"/>
+
+        <path id="bowString"
+          d="M80 12 L80 158"
+          fill="none"
+          stroke="#987c84"
+          stroke-width="1.8"/>
+      </svg>
+    </div>
+
+    <!-- This is the actual draggable arrow -->
+
+    <div class="arrow-projectile" id="arrowProjectile"
+      role="button" tabindex="0"
+      aria-label="Drag the arrow backwards, then release to shoot">
+
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+
+        <path d="M10 90 L87 13"
+          stroke="#986a55"
+          stroke-width="4"
+          stroke-linecap="round"/>
+
+        <path d="M87 13 L64 17 L83 36 Z"
+          fill="#d5a45f"
+          stroke="#986a55"
+          stroke-width="1.5"/>
+
+        <path d="M10 90 L19 68 L31 80 Z"
+          fill="#f1b6cb"
+          stroke="#bd7896"
+          stroke-width="1.5"/>
+
+      </svg>
+    </div>
 
   </div>
+
+  <button class="primary-btn launch-btn" id="launchArrow" type="button">
+    Touch & pull the arrow 🏹
+  </button>
+
+  <p class="subtitle" id="arrowHint" style="margin-top:12px">
+    Pull it backwards and release to hit the heart. ✨
+  </p>
+
 </section>
 
 
-<!-- The travelling word is placed over the page during animation. -->
+<!-- =====================================
+     SCREEN 3 — SHORT BIRTHDAY REVEAL
+===================================== -->
 
-<span id="flyingWord" aria-hidden="true"></span>
+<section id="birthdayScreen" class="screen">
+
+  <div class="birthday-heart">💗</div>
+
+  <h1 class="birthday-title">
+    Happy Birthday,<br>Aabhyanshi! 🎂
+  </h1>
+
+  <div class="birthday-message">
+    You mean so much to me. 🫶🏻<br>
+    I hope your day is as special as you are. ✨
+  </div>
+
+  <div class="signature">— Your Yash 💌</div>
+
+  <button class="primary-btn" id="toChest" type="button">
+    Wait… there's a treasure! 🎁
+  </button>
+
+</section>
+
+
+<!-- =====================================
+     SCREEN 4 — TREASURE CHEST + LETTER
+===================================== -->
+
+<section id="chestScreen" class="screen">
+
+  <h1>A Little Treasure ✨</h1>
+
+  <p class="chest-subtitle" id="chestSubtitle">
+    Something made just for you.<br>
+    Tap the chest to open it. 💌
+  </p>
+
+  <button class="chest-button" id="chestButton"
+    type="button" aria-label="Open the treasure chest">
+
+    <span class="chest-lid"></span>
+    <span class="chest-base"></span>
+
+  </button>
+
+  <div class="letter" id="letter">
+
+    <h2>For My Mon Cœur 💗</h2>
+
+    <p>
+      Happy Birthday, my Mi Amor, my Darlin,
+      my Bby jii, my Baccha. 🥹❤️
+    </p>
+
+    <p>
+      I don't think you realise how important you are
+      to me, Aabhyanshi. You've become such a big part
+      of my life, and honestly, I wouldn't want it any
+      other way. 🫶🏻
+    </p>
+
+    <p>
+      You're present everywhere, from my laughter to
+      my poems. Somehow, you find your way into my
+      thoughts, my words, and even the smallest things
+      that make me happy. 💗
+    </p>
+
+    <p>
+      I love the little moments we share, the silly
+      things we do, and all the memories we're making
+      together. I hope I can give you as many reasons
+      to smile as you give me. 🥹🦋
+    </p>
+
+    <p>
+      Never forget how special you are to me, my Baccha.
+      You deserve so much happiness, today and always. ❤️‍🩹
+    </p>
+
+    <p>
+      <strong>Happy Birthday, my Mon Cœur. 🎂💋</strong>
+    </p>
+
+    <p class="letter-sign">
+      Yours,<br>
+      Your Yashuuu 🫂💗
+    </p>
+
+  </div>
+
+</section>
 
 
 <script>
 (() => {
-  const balloons = document.querySelectorAll(".balloon");
-  const slots = document.querySelectorAll(".word-slot");
+  "use strict";
 
-  const tapHint = document.getElementById("tapHint");
-  const sentence = document.getElementById("sentence");
-  const allDone = document.getElementById("allDone");
-  const flyingWord = document.getElementById("flyingWord");
+  /* =====================================
+     SCREEN NAVIGATION
+  ===================================== */
 
-  const balloonScene = document.getElementById("balloonScene");
-  const birthdayScene = document.getElementById("birthdayScene");
+  const screens = {
+    balloons: document.getElementById("balloonScreen"),
+    arrow: document.getElementById("arrowScreen"),
+    birthday: document.getElementById("birthdayScreen"),
+    chest: document.getElementById("chestScreen")
+  };
 
-  const poppedWords = new Set();
+  function showScreen(screen) {
+    Object.values(screens).forEach(item => {
+      item.classList.remove("active");
+    });
 
-  let animationRunning = false;
-
-  function findSlot(word) {
-    return document.querySelector(
-      `.word-slot[data-slot="${word}"]`
-    );
+    screen.classList.add("active");
+    window.scrollTo(0, 0);
   }
 
-  function createParticles(x, y) {
-    const colors = [
-      "#e9a0b0",
-      "#c5b4e8",
-      "#f3d77d",
-      "#a8d5ed",
-      "#a8d9c0"
-    ];
 
-    for (let i = 0; i < 10; i++) {
+  /* =====================================
+     BALLOON GAME
+  ===================================== */
+
+  const balloons = [...document.querySelectorAll(".balloon")];
+  const messageArea = document.getElementById("secretMessage");
+  const progress = document.getElementById("progress");
+  const toArrow = document.getElementById("toArrow");
+
+  const words = ["YOU", "ARE", "SO", "VERY", "SPECIAL"];
+
+  let popped = 0;
+  let balloonBusy = false;
+
+  // Empty slots ensure the secret sentence is initially invisible.
+  const slots = words.map(() => {
+    const slot = document.createElement("span");
+    slot.className = "word-slot";
+    messageArea.appendChild(slot);
+    return slot;
+  });
+
+  function particlesAt(x, y, color, amount = 17) {
+    for (let i = 0; i < amount; i++) {
       const particle = document.createElement("span");
 
-      particle.textContent = i % 2 === 0 ? "✦" : "·";
-      particle.style.position = "fixed";
+      particle.className = "particle";
       particle.style.left = x + "px";
       particle.style.top = y + "px";
-      particle.style.zIndex = "90";
-      particle.style.pointerEvents = "none";
-      particle.style.color = colors[i % colors.length];
-      particle.style.fontSize = (12 + Math.random() * 10) + "px";
+      particle.style.background = color;
+
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 35 + Math.random() * 65;
+
+      particle.style.setProperty(
+        "--dx", Math.cos(angle) * distance + "px"
+      );
+
+      particle.style.setProperty(
+        "--dy", Math.sin(angle) * distance + "px"
+      );
 
       document.body.appendChild(particle);
 
-      const angle = Math.PI * 2 * i / 10;
-      const distance = 25 + Math.random() * 35;
+      particle.addEventListener("animationend", () => {
+        particle.remove();
+      }, { once: true });
+    }
+  }
 
-      const animation = particle.animate([
+  function flyWord(word, startX, startY, slot) {
+    return new Promise(resolve => {
+      const flying = document.createElement("span");
+
+      flying.className = "flying-word";
+      flying.textContent = word;
+      flying.style.left = startX + "px";
+      flying.style.top = startY + "px";
+
+      document.body.appendChild(flying);
+
+      const rect = slot.getBoundingClientRect();
+
+      const endX = rect.left + rect.width / 2;
+      const endY = rect.top + rect.height / 2;
+
+      const deltaX = endX - startX;
+      const deltaY = endY - startY;
+
+      flying.animate([
         {
-          transform: "translate(-50%,-50%) scale(1)",
+          transform: "translate(0,0) scale(1)",
           opacity: 1
         },
         {
           transform:
-            `translate(calc(-50% + ${Math.cos(angle) * distance}px),` +
-            `calc(-50% + ${Math.sin(angle) * distance}px)) scale(.2)`,
-          opacity: 0
+            `translate(${deltaX}px,${deltaY}px) scale(.75)`,
+          opacity: .2
         }
       ], {
-        duration: 550 + Math.random() * 250,
-        easing: "ease-out",
+        duration: 550,
+        easing: "cubic-bezier(.2,.8,.3,1)",
         fill: "forwards"
-      });
+      }).onfinish = () => {
+        flying.remove();
 
-      animation.onfinish = () => particle.remove();
-    }
-  }
-
-  function flyWord(word, source, destination) {
-    return new Promise(resolve => {
-      const sourceRect = source.getBoundingClientRect();
-      const targetRect = destination.getBoundingClientRect();
-
-      const startX = sourceRect.left + sourceRect.width / 2;
-      const startY = sourceRect.top + sourceRect.height / 2;
-
-      const endX = targetRect.left + targetRect.width / 2;
-      const endY = targetRect.top + targetRect.height / 2;
-
-      flyingWord.textContent = word;
-      flyingWord.style.display = "block";
-      flyingWord.style.left = startX + "px";
-      flyingWord.style.top = startY + "px";
-
-      const animation = flyingWord.animate([
-        {
-          left: startX + "px",
-          top: startY + "px",
-          transform: "translate(-50%,-50%) scale(.7) rotate(-5deg)",
-          opacity: 0
-        },
-        {
-          left: (startX + endX) / 2 + "px",
-          top: (startY + endY) / 2 - 35 + "px",
-          transform: "translate(-50%,-50%) scale(1.15) rotate(4deg)",
-          opacity: 1,
-          offset: .55
-        },
-        {
-          left: endX + "px",
-          top: endY + "px",
-          transform: "translate(-50%,-50%) scale(1) rotate(0deg)",
-          opacity: 1
-        }
-      ], {
-        duration: 650,
-        easing: "cubic-bezier(.2,.8,.25,1)",
-        fill: "forwards"
-      });
-
-      animation.onfinish = () => {
-        flyingWord.style.display = "none";
-
-        destination.classList.add("filled");
+        slot.textContent = word;
+        slot.classList.add("filled");
 
         resolve();
       };
     });
   }
 
-  async function popBalloon(balloon) {
+  const balloonColors = [
+    "#ff9fbd",
+    "#c2a7f5",
+    "#ffdf7e",
+    "#8bd8f5",
+    "#91e3bf"
+  ];
+
+  balloons.forEach((balloon, index) => {
+    balloon.addEventListener("click", async () => {
+
+      if (balloonBusy || balloon.classList.contains("popping")) {
+        return;
+      }
+
+      balloonBusy = true;
+      balloon.disabled = true;
+
+      const rect = balloon.getBoundingClientRect();
+
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      particlesAt(centerX, centerY, balloonColors[index], 20);
+
+      balloon.classList.add("popping");
+
+      await new Promise(resolve => setTimeout(resolve, 220));
+
+      await flyWord(
+        balloon.dataset.word,
+        centerX,
+        centerY,
+        slots[index]
+      );
+
+      balloon.style.visibility = "hidden";
+
+      popped++;
+
+      if (popped < balloons.length) {
+        progress.textContent =
+          `${balloons.length - popped} little surprises remain ✨`;
+      } else {
+        progress.textContent = "A little message, just for you. 💗";
+        toArrow.classList.remove("hidden");
+      }
+
+      balloonBusy = false;
+    });
+  });
+
+  toArrow.addEventListener("click", () => {
+    showScreen(screens.arrow);
+  });
+
+
+  /* =====================================
+     INTERACTIVE BOW AND ARROW
+  ===================================== */
+
+  const archeryArea = document.getElementById("archeryArea");
+  const arrow = document.getElementById("arrowProjectile");
+  const heart = document.getElementById("heartTarget");
+  const bowString = document.getElementById("bowString");
+  const bowWood = document.getElementById("bowWood");
+  const impactRing = document.getElementById("impactRing");
+  const launchButton = document.getElementById("launchArrow");
+  const arrowHint = document.getElementById("arrowHint");
+
+  let dragging = false;
+  let launched = false;
+  let pointerStartX = 0;
+  let pointerStartY = 0;
+  let pullDistance = 0;
+  let activePointerId = null;
+
+  const maxPull = 65;
+  const minPull = 9;
+
+  function updateBow(pull) {
+    // The string bends backwards as the arrow is pulled.
+    bowString.setAttribute(
+      "d",
+      `M80 12 L${80 - pull * .65} 85 L80 158`
+    );
+
+    // The bow flexes slightly to make the pull feel responsive.
+    bowWood.setAttribute(
+      "d",
+      `M80 12 Q${-4 - pull * .22} 85 80 158`
+    );
+  }
+
+  function setArrowPull(pull) {
+    pullDistance = Math.max(0, Math.min(maxPull, pull));
+
+    const diagonal = pullDistance / Math.sqrt(2);
+
+    // Pulling back moves the arrow down and left.
+    arrow.style.transform =
+      `translate(${-diagonal}px, ${diagonal}px)`;
+
+    updateBow(pullDistance);
+  }
+
+  function createSparkles(x, y, amount = 22) {
+    const emojis = ["💗", "✨", "💕", "💖", "🌸"];
+
+    for (let i = 0; i < amount; i++) {
+      const sparkle = document.createElement("span");
+
+      sparkle.className = "sparkle";
+      sparkle.textContent =
+        emojis[Math.floor(Math.random() * emojis.length)];
+
+      sparkle.style.left = x + "px";
+      sparkle.style.top = y + "px";
+
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 45 + Math.random() * 110;
+
+      sparkle.style.setProperty(
+        "--dx", Math.cos(angle) * distance + "px"
+      );
+
+      sparkle.style.setProperty(
+        "--dy", Math.sin(angle) * distance + "px"
+      );
+
+      document.body.appendChild(sparkle);
+
+      sparkle.addEventListener("animationend", () => {
+        sparkle.remove();
+      }, { once: true });
+    }
+  }
+
+  function restoreArrow() {
+    arrow.style.visibility = "visible";
+    arrow.style.pointerEvents = "auto";
+    arrow.style.transform = "translate(0,0)";
+
+    arrow.classList.remove("dragging", "gone");
+
+    bowString.setAttribute("d", "M80 12 L80 158");
+    bowWood.setAttribute("d", "M80 12 Q-4 85 80 158");
+
+    pullDistance = 0;
+    dragging = false;
+    activePointerId = null;
+  }
+
+  function launchArrowNow() {
+    if (launched || dragging) return;
+
+    launched = true;
+    launchButton.disabled = true;
+
+    arrowHint.textContent = "Off it goes… 💘";
+
+    arrow.style.pointerEvents = "none";
+    arrow.classList.remove("dragging");
+
+    const areaRect = archeryArea.getBoundingClientRect();
+    const heartRect = heart.getBoundingClientRect();
+
+    // Find the arrow's original tip in the archery area.
+    const arrowBaseX = arrow.offsetLeft;
+    const arrowBaseY = arrow.offsetTop;
+
+    const tipX = arrowBaseX + arrow.offsetWidth * .87;
+    const tipY = arrowBaseY + arrow.offsetHeight * .13;
+
+    // Aim automatically at the heart's centre.
+    const targetX =
+      heartRect.left + heartRect.width / 2 - areaRect.left;
+
+    const targetY =
+      heartRect.top + heartRect.height / 2 - areaRect.top;
+
+    const flyX = targetX - tipX;
+    const flyY = targetY - tipY;
+
+    const startX = -pullDistance / Math.sqrt(2);
+    const startY = pullDistance / Math.sqrt(2);
+
+    const endX = startX + flyX;
+    const endY = startY + flyY;
+
+    // Restore the bowstring as the arrow leaves.
+    bowString.setAttribute("d", "M80 12 L80 158");
+    bowWood.setAttribute("d", "M80 12 Q-4 85 80 158");
+
+    const animation = arrow.animate([
+      {
+        transform: `translate(${startX}px,${startY}px) rotate(0deg) scale(1)`,
+        opacity: 1
+      },
+      {
+        transform:
+          `translate(${endX * .72}px,${endY * .72}px) rotate(0deg) scale(1.04)`,
+        opacity: 1,
+        offset: .72
+      },
+      {
+        transform:
+          `translate(${endX}px,${endY}px) rotate(0deg) scale(.75)`,
+        opacity: 0
+      }
+    ], {
+      duration: 850,
+      easing: "cubic-bezier(.25,.65,.2,1)",
+      fill: "forwards"
+    });
+
+    animation.onfinish = () => {
+      arrow.classList.add("gone");
+      heart.style.visibility = "hidden";
+
+      impactRing.classList.remove("burst");
+      void impactRing.offsetWidth;
+      impactRing.classList.add("burst");
+
+      const heartCenterX =
+        heartRect.left + heartRect.width / 2;
+
+      const heartCenterY =
+        heartRect.top + heartRect.height / 2;
+
+      createSparkles(heartCenterX, heartCenterY, 28);
+
+      // A brief pause lets the heart burst finish before the reveal.
+      setTimeout(() => {
+        showScreen(screens.birthday);
+      }, 650);
+    };
+  }
+
+  arrow.addEventListener("pointerdown", event => {
+    if (launched || dragging) return;
+
+    event.preventDefault();
+
+    dragging = true;
+    activePointerId = event.pointerId;
+
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
+
+    pullDistance = 0;
+
+    arrow.classList.add("dragging");
+
+    try {
+      arrow.setPointerCapture(event.pointerId);
+    } catch (_) {
+      // Pointer capture is a convenience; dragging can still work.
+    }
+
+    arrowHint.textContent = "Pull back… then release! 💗";
+    launchButton.textContent = "Release to shoot 💘";
+  });
+
+  arrow.addEventListener("pointermove", event => {
+    if (!dragging || event.pointerId !== activePointerId) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const dx = event.clientX - pointerStartX;
+    const dy = event.clientY - pointerStartY;
+
+    // Only the backwards diagonal counts as drawing the bow.
+    const projectedPull = (-dx + dy) / Math.sqrt(2);
+
+    setArrowPull(projectedPull);
+  });
+
+  function releaseArrow(event) {
+    if (!dragging) return;
+
     if (
-      balloon.classList.contains("popped") ||
-      animationRunning
+      event &&
+      activePointerId !== null &&
+      event.pointerId !== activePointerId
     ) {
       return;
     }
 
-    animationRunning = true;
+    dragging = false;
+    activePointerId = null;
 
-    const word = balloon.dataset.word;
-    const sourceRect = balloon.getBoundingClientRect();
+    arrow.classList.remove("dragging");
 
-    const centerX = sourceRect.left + sourceRect.width / 2;
-    const centerY = sourceRect.top + sourceRect.height / 2;
-
-    const destination = findSlot(word);
-
-    balloon.classList.add("popped");
-    balloon.setAttribute("aria-pressed", "true");
-
-    createParticles(centerX, centerY);
-
-    tapHint.textContent = "Look where the word belongs… ✨";
-
-    await flyWord(word, balloon, destination);
-
-    destination.classList.add("filled");
-    poppedWords.add(word);
-
-    animationRunning = false;
-
-    if (poppedWords.size === 5) {
-      finishSentence();
+    if (pullDistance >= minPull) {
+      launchArrowNow();
     } else {
-      const remaining = 5 - poppedWords.size;
+      // A tiny pull snaps the arrow gently back into place.
+      const currentPull = pullDistance;
+      const diagonal = currentPull / Math.sqrt(2);
 
-      tapHint.textContent =
-        remaining + (remaining === 1
-          ? " little word left to discover ♡"
-          : " little words left to discover ♡");
+      arrow.animate([
+        {
+          transform: `translate(${-diagonal}px,${diagonal}px)`
+        },
+        {
+          transform: "translate(0,0)"
+        }
+      ], {
+        duration: 240,
+        easing: "cubic-bezier(.2,1.5,.5,1)"
+      }).onfinish = () => {
+        arrow.style.transform = "translate(0,0)";
+        updateBow(0);
+        pullDistance = 0;
+      };
+
+      arrowHint.textContent = "Pull a little further, then release! 🏹";
     }
+
+    launchButton.textContent = "Touch & pull the arrow 🏹";
   }
 
-  function finishSentence() {
-    tapHint.textContent = "Every word found its place. 🤍";
+  arrow.addEventListener("pointerup", releaseArrow);
+  arrow.addEventListener("pointercancel", releaseArrow);
 
-    sentence.classList.add("complete");
+  arrow.addEventListener("lostpointercapture", () => {
+    if (dragging) {
+      releaseArrow();
+    }
+  });
 
-    allDone.classList.remove("hidden");
+  // The button is a fallback for accessibility and testing.
+  // Tapping it launches the arrow without requiring a drag.
+  launchButton.addEventListener("click", () => {
+    if (launched || dragging) return;
+    launchArrowNow();
+  });
 
-    // Make sure the final button is visible on smaller screens.
+  // Keyboard support for users who cannot drag.
+  arrow.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+
+      if (!launched && !dragging) {
+        launchArrowNow();
+      }
+    }
+  });
+
+
+  /* =====================================
+     HEART HIT → BIRTHDAY REVEAL
+  ===================================== */
+
+  // The birthday screen appears only after the arrow reaches the heart.
+  // The transition is handled by launchArrowNow() above.
+
+
+  /* =====================================
+     SCREEN 3 → SCREEN 4
+  ===================================== */
+
+  document.getElementById("toChest").addEventListener("click", () => {
+    showScreen(screens.chest);
+  });
+
+
+  /* =====================================
+     TREASURE CHEST
+  ===================================== */
+
+  const chestButton = document.getElementById("chestButton");
+  const chestSubtitle = document.getElementById("chestSubtitle");
+  const letter = document.getElementById("letter");
+
+  let chestOpened = false;
+
+  chestButton.addEventListener("click", () => {
+    if (chestOpened) return;
+
+    chestOpened = true;
+
+    chestButton.classList.add("opened");
+
+    chestSubtitle.textContent =
+      "A little piece of my heart, just for you. 💗";
+
+    createSparkles(
+      window.innerWidth / 2,
+      window.innerHeight / 2,
+      18
+    );
+
     setTimeout(() => {
-      allDone.scrollIntoView({
+      letter.classList.add("visible");
+
+      // Scroll gently so the entire letter can be read on a phone.
+      letter.scrollIntoView({
         behavior: "smooth",
         block: "nearest"
       });
-    }, 250);
-  }
-
-  balloons.forEach(balloon => {
-    balloon.addEventListener("click", () => {
-      popBalloon(balloon);
-    });
-
-    balloon.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        popBalloon(balloon);
-      }
-    });
+    }, 650);
   });
-
-  document.getElementById("birthdayButton")
-    .addEventListener("click", () => {
-      balloonScene.classList.add("hidden");
-      birthdayScene.classList.remove("hidden");
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
 
 })();
 </script>
